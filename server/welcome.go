@@ -28,7 +28,14 @@ func makeWelcomeHTML() string {
 	items := redis.QueryHour()
 
 	for _, item := range items {
-		buffer = append(buffer, fmt.Sprintf("<div class=\"item\"><a href=\"https://youtube.com/watch?v=%s\">%s</a></div>", item.Id, item.Id))
+		buffer = append(buffer, "<div class=\"item\">")
+		buffer = append(buffer, "<div>")
+		buffer = append(buffer, fmt.Sprintf("<a href=\"https://youtube.com/watch?v=%s\">%s</a>", item.Id, item.Title))
+		buffer = append(buffer, "</div>")
+		buffer = append(buffer, "<div>")
+		buffer = append(buffer, item.ViewCount)
+		buffer = append(buffer, "</div>")
+		buffer = append(buffer, "</div>")
 	}
 
 	buffer = append(buffer, "</div>")

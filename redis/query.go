@@ -6,36 +6,37 @@ import (
 )
 
 type RedisVideo struct {
-	Id string
+	Id        string
+	Title     string
+	ViewCount string
+	ChannelId string
 }
 
 func QueryHour() []RedisVideo {
 	t := time.Now().In(utc)
 	t = t.Add(time.Hour * -1)
 	bucket := BucketForHour(t)
-	items := QueryBucket(bucket)
+	return QueryBucket(bucket)
+}
 
+func QueryBucket(b string) []RedisVideo {
 	list := []RedisVideo{}
-	for _, item := range items {
+	members, err := nc().SMembers(ctx, b).Result()
+	if err != nil {
+		fmt.Println(err)
+		return list
+	}
+	for _, item := range members {
 		v := RedisVideo{}
 		v.Id = item
+		m := QueryAttributes(v.Id)
+		v.Title = m["title"]
+		v.ViewCount = m["view_count"]
+		v.ChannelId = m["c_id"]
 		list = append(list, v)
 	}
 
 	return list
-}
-
-func QueryBucket(b string) []string {
-	items := []string{}
-	members, err := nc().SMembers(ctx, b).Result()
-	if err != nil {
-		fmt.Println(err)
-		return items
-	}
-	for _, i := range members {
-		items = append(items, i)
-	}
-	return items
 }
 
 func QueryAttributes(b string) map[string]string {
