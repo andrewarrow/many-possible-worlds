@@ -11,9 +11,10 @@ func main() {
 	fmt.Println("searching for", word)
 	json := network.SearchWord(word)
 	if json != "" {
-		list := parse.ParseJson(json)
+		list, total := parse.ParseJson(json)
+		fmt.Println(total)
 		for _, item := range list {
-			fmt.Println(item.Snippet.Title)
+			fmt.Println(item.Snippet.PublishedAt, item.Snippet.Title)
 		}
 	}
 }
