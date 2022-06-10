@@ -7,12 +7,17 @@ import (
 	"time"
 )
 
-func SearchWord(word string) string {
+func SearchWord(word, nextPageToken string) string {
 
-	t := time.Now().Add(time.Hour * -24)
+	t := time.Now().Add(time.Hour * -1)
 	pa := t.Format(time.RFC3339)
 	key := os.Getenv("YOUTUBE_KEY")
-	json := DoGet(fmt.Sprintf("search?part=snippet&order=date&maxResults=50&q=%s&key=%s&publishedAfter=%s", word, key, pa))
+	url := fmt.Sprintf("search?part=snippet&order=date&maxResults=50&q=%s&key=%s&publishedAfter=%s&pageToken=%s", word, key, pa, nextPageToken)
+	if nextPageToken != "" {
+		url = fmt.Sprintf("search?part=snippet&order=date&maxResults=50&q=%s&key=%s&publishedAfter=%s&pageToken=%s", word, key, pa, nextPageToken)
+	}
+	fmt.Println(url)
+	json := DoGet(url)
 	return json
 }
 
