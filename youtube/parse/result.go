@@ -16,30 +16,35 @@ type PageInfo struct {
 }
 
 type Item struct {
+	Id      Id      `json:"id"`
 	Snippet Snippet `json:"snippet"`
 }
 
-type Snippet struct {
-	Title       string    `json:"title"`
-	PublishedAt time.Time `json:publishedAt"`
+type Id struct {
+	VideoId string `json:"videoId"`
 }
 
-/*
+type Snippet struct {
+	Title        string     `json:"title"`
+	Description  string     `json:"description"`
+	PublishedAt  time.Time  `json:publishedAt"`
+	ChannelTitle string     `json:"channelTitle"`
+	ChannelId    string     `json:"channelId"`
+	Thumbnails   Thumbnails `json:"thumbnails"`
+}
 
-  "pageInfo": {
-    "totalResults": 1000000,
-    "resultsPerPage": 25
-  },
+type Thumbnails struct {
+	Default Default `json:"default"`
+}
 
-   "snippet": {
-     "publishedAt": "2016-10-12T22:32:12Z",
-     "channelId": "UChSpME3QaSFAWK8Hpmg-Dyw",
-     "title": "Daily Calm | 10 Minute Mindfulness Meditation | Be Present",
+type Default struct {
+	Url    string `json:"url"`
+	Width  int    `json:"width"`
+	Height int    `json:"height"`
+}
 
-*/
-
-func ParseJson(jsonString string) ([]Item, int) {
+func ParseJson(jsonString string) *Result {
 	var result Result
 	json.Unmarshal([]byte(jsonString), &result)
-	return result.Items, result.PageInfo.TotalResults
+	return &result
 }
