@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"io/ioutil"
 	"youtube/network"
 	"youtube/parse"
 )
@@ -13,7 +12,7 @@ func main() {
 	json := network.SearchWord(word)
 	if json != "" {
 
-		ioutil.WriteFile("fname.txt", []byte(json), 0644)
+		//ioutil.WriteFile("fname.txt", []byte(json), 0644)
 
 		result := parse.ParseJson(json)
 		fmt.Println(result.PageInfo.TotalResults)
@@ -25,6 +24,12 @@ func main() {
 
 		fmt.Println(ids)
 		json = network.SearchVideos(ids)
-		ioutil.WriteFile("fname2.txt", []byte(json), 0644)
+		if json != "" {
+			stats := parse.ParseStatJson(json)
+			for _, stat := range stats.Items {
+				fmt.Println(stat.Id, stat.Statistics.ViewCount)
+			}
+		}
+		//ioutil.WriteFile("fname2.txt", []byte(json), 0644)
 	}
 }
