@@ -2,8 +2,10 @@ package main
 
 import (
 	"fmt"
-	"youtube/network"
-	"youtube/parse"
+	"many-pw/network"
+	"many-pw/parse"
+	"many-pw/redis"
+	"time"
 )
 
 func main() {
@@ -30,6 +32,7 @@ type Channel struct {
 }
 
 func QueryYoutubeUpdateRedis(word string) {
+	t := time.Now()
 	json := network.SearchWord(word)
 	if json != "" {
 
@@ -76,6 +79,7 @@ func QueryYoutubeUpdateRedis(word string) {
 			c := channelStats[v.ChannelId]
 			fmt.Printf("%05s %s\n", v.ViewCount, v.Title)
 			fmt.Printf("%05s %s\n", c.SubscriberCount, v.ChannelTitle)
+			redis.InsertItem(t.Unix(), v.Id, v.Title, v.ChannelTitle, v.ViewCount, v.ChannelId, c.SubscriberCount)
 		}
 
 	}
