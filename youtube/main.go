@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"io/ioutil"
 	"youtube/network"
 	"youtube/parse"
 )
@@ -24,7 +23,11 @@ func main() {
 			cmap[item.Snippet.ChannelId] = true
 		}
 		json = network.GetChannels(cmap)
-		ioutil.WriteFile("fname.txt", []byte(json), 0644)
+		//ioutil.WriteFile("fname.txt", []byte(json), 0644)
+		channels := parse.ParseChannelJson(json)
+		for _, item := range channels.Items {
+			fmt.Println(item.Id, item.Statistics.ViewCount, item.Statistics.ViewCount, item.Statistics.SubscriberCount)
+		}
 
 		fmt.Println(ids)
 		json = network.SearchVideos(ids)

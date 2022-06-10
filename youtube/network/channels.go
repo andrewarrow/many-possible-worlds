@@ -23,6 +23,6 @@ func GetChannels(cmap map[string]bool) string {
 	}
 
 	list := strings.Join(ids, ",")
-	json := DoGet(fmt.Sprintf("channels?part=snippet,contentDetails,statistics&id=%s&key=%s", list, key))
+	json := DoGet(fmt.Sprintf("channels?maxResults=50&part=snippet,contentDetails,statistics&id=%s&key=%s", list, key))
 	return json
 }
