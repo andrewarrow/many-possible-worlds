@@ -3,6 +3,8 @@ package redis
 import (
 	"fmt"
 	"time"
+
+	"github.com/go-redis/redis/v8"
 )
 
 var utc *time.Location
@@ -11,30 +13,33 @@ func init() {
 	utc, _ = time.LoadLocation("UTC")
 }
 
-func InsertItem(ts int64, v *Video) {
+func InsertItem(ts int64, v *Video, subs string) {
 
 	t := time.Unix(ts, 0)
 	t = t.In(utc)
 
-	bucket := BucketForHour(t)
+	bucket := BucketForDay(t)
 
-	err := nc().SAdd(ctx, bucket, v.Id).Err()
+	rz := redis.Z{
+		Score:  float64(v.PublishedAt),
+		Member: v.Id,
+	}
+
+	err := nc().ZAdd(ctx, bucket, &rz).Err()
 	if err != nil {
 		fmt.Println(err)
 		return
 	}
 
-	/*
-		nc().HSet(ctx, videoId, "title", title).Err()
-		nc().HSet(ctx, videoId, "view_count", viewCount).Err()
-		nc().HSet(ctx, videoId, "c_id", channelId).Err()
+	nc().HSet(ctx, v.Id, "title", v.Title).Err()
+	nc().HSet(ctx, v.Id, "view_count", v.ViewCount).Err()
+	nc().HSet(ctx, v.Id, "c_id", v.ChannelId).Err()
 
-		nc().HSet(ctx, channelId, "title", channelTitle).Err()
-		nc().HSet(ctx, channelId, "subs", subs).Err()
+	nc().HSet(ctx, v.ChannelId, "title", v.ChannelTitle).Err()
+	nc().HSet(ctx, v.ChannelId, "subs", subs).Err()
 
-		expireTime := time.Now().Add(time.Hour * 24 * 30 * 12 * 2)
-		nc().ExpireAt(ctx, bucket, expireTime)
-		nc().ExpireAt(ctx, videoId, expireTime)
-		nc().ExpireAt(ctx, channelId, expireTime)
-	*/
+	expireTime := time.Now().Add(time.Hour * 24 * 30 * 12 * 2)
+	nc().ExpireAt(ctx, bucket, expireTime)
+	nc().ExpireAt(ctx, v.Id, expireTime)
+	nc().ExpireAt(ctx, v.ChannelId, expireTime)
 }

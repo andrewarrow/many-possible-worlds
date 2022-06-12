@@ -64,7 +64,7 @@ func QueryYoutubeUpdateRedis(word string) {
 			c := channelStats[v.ChannelId]
 			fmt.Printf("%05s %s\n", v.ViewCount, v.Title)
 			fmt.Printf("%05s %s\n", c.SubscriberCount, v.ChannelTitle)
-			redis.InsertItem(t.Unix(), v)
+			redis.InsertItem(t.Unix(), v, c.SubscriberCount)
 		}
 
 	}
