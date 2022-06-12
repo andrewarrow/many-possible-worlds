@@ -13,12 +13,12 @@ func init() {
 	utc, _ = time.LoadLocation("UTC")
 }
 
-func InsertItem(ts int64, v *Video, subs string) {
+func InsertItem(ts int64, v *Video, subs, slug string) {
 
 	t := time.Unix(ts, 0)
 	t = t.In(utc)
 
-	bucket := BucketForDay(t)
+	bucket := fmt.Sprintf("%s-%s", slug, BucketForDay(t))
 
 	rz := redis.Z{
 		Score:  float64(v.PublishedAt),

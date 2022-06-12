@@ -10,15 +10,15 @@ import (
 
 func main() {
 	//words := []string{"meditation", "spirituality", "awakening", "law of attraction", "ego", "self hypnosis", "manifestation", "zen master", "non-duality", "healing", "thoughts"}
-	words := []string{"meditation"}
-	for _, word := range words {
-		QueryYoutubeUpdateRedis(word)
+	//words := []string{"meditation"}
+	for _, w := range redis.AllWorlds() {
+		QueryYoutubeUpdateRedis(w)
 	}
 }
 
-func QueryYoutubeUpdateRedis(word string) {
+func QueryYoutubeUpdateRedis(w redis.World) {
 	t := time.Now()
-	json := network.SearchWord(word)
+	json := network.SearchWord(w.Title)
 	if json != "" {
 
 		result := parse.ParseJson(json)
@@ -64,7 +64,7 @@ func QueryYoutubeUpdateRedis(word string) {
 			c := channelStats[v.ChannelId]
 			fmt.Printf("%05s %s\n", v.ViewCount, v.Title)
 			fmt.Printf("%05s %s\n", c.SubscriberCount, v.ChannelTitle)
-			redis.InsertItem(t.Unix(), v, c.SubscriberCount)
+			redis.InsertItem(t.Unix(), v, c.SubscriberCount, w.Slug)
 		}
 
 	}

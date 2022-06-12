@@ -3,6 +3,7 @@ package server
 import (
 	"fmt"
 	"html/template"
+	"many-pw/redis"
 	"net/http"
 	"strings"
 
@@ -19,26 +20,12 @@ func WelcomeIndex(c *gin.Context) {
 	})
 }
 
-type World struct {
-	Slug  string
-	Title string
-}
-
 func makeWelcomeHTML() string {
 	buffer := []string{}
 
 	buffer = append(buffer, "<div class=\"good-links\">")
 
-	w1 := World{}
-	w1.Slug = "meditation"
-	w1.Title = "meditation"
-
-	w2 := World{}
-	w2.Slug = "law-of-attraction"
-	w2.Title = "Law of Attraction"
-
-	items := []World{w1, w2}
-	for _, w := range items {
+	for _, w := range redis.AllWorlds() {
 		buffer = append(buffer, "<div class=\"item\">")
 		buffer = append(buffer, "<div>")
 		//buffer = append(buffer, fmt.Sprintf("<a href=\"https://youtube.com/watch?v=%s\">%s</a>", item.Id, item.Title))
