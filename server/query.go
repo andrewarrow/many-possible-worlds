@@ -2,6 +2,7 @@ package server
 
 import (
 	"html/template"
+	"many-pw/redis"
 	"net/http"
 	"strings"
 
@@ -20,6 +21,8 @@ func QueryIndex(c *gin.Context) {
 
 func makeQueryHTML() string {
 	buffer := []string{}
+
+	redis.QueryDay()
 
 	buffer = append(buffer, "<div class=\"good-links\">")
 
