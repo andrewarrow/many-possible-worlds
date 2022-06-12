@@ -6,6 +6,7 @@ import (
 	"many-pw/redis"
 	"net/http"
 	"strings"
+	"time"
 
 	"github.com/gin-gonic/gin"
 )
@@ -34,9 +35,10 @@ func makeQueryHTML(slug string) string {
 		buffer = append(buffer, fmt.Sprintf("<a href=\"https://youtube.com/watch?v=%s\">%s</a>", item.Id, item.Title))
 
 		buffer = append(buffer, "</div>")
-		buffer = append(buffer, "<div>")
+		buffer = append(buffer, "<div class=\"small\">")
 		buffer = append(buffer, item.ViewCount)
-		buffer = append(buffer, "</div>")
+		t := time.Unix(item.PublishedAt, 0)
+		buffer = append(buffer, fmt.Sprintf("view(s) %s</div>", t.Format(time.RFC850)))
 		buffer = append(buffer, "</div>")
 	}
 

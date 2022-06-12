@@ -23,7 +23,7 @@ func QueryBucket(b string) []Video {
 
 	*/
 
-	vals, err := nc().ZRangeWithScores(ctx, b, 0, -1).Result()
+	vals, err := nc().ZRevRangeWithScores(ctx, b, 0, 100).Result()
 
 	if err != nil {
 		fmt.Println(err)
