@@ -16,21 +16,6 @@ func main() {
 	}
 }
 
-type Video struct {
-	Id           string
-	Title        string
-	PublishedAt  int64
-	ChannelTitle string
-	ChannelId    string
-	ViewCount    string
-}
-
-type Channel struct {
-	ViewCount       string
-	VideoCount      string
-	SubscriberCount string
-}
-
 func QueryYoutubeUpdateRedis(word string) {
 	t := time.Now()
 	json := network.SearchWord(word)
@@ -40,10 +25,10 @@ func QueryYoutubeUpdateRedis(word string) {
 
 		//fmt.Println(result.NextPageToken, result.PageInfo.TotalResults)
 		ids := []string{}
-		vmap := map[string]*Video{}
+		vmap := map[string]*redis.Video{}
 		cmap := map[string]bool{}
 		for _, item := range result.Items {
-			v := Video{}
+			v := redis.Video{}
 			v.Id = item.Id.VideoId
 			v.Title = item.Snippet.Title
 			v.PublishedAt = item.Snippet.PublishedAt.Unix()
@@ -66,9 +51,9 @@ func QueryYoutubeUpdateRedis(word string) {
 		json = network.GetChannels(cmap)
 		//ioutil.WriteFile("fname.txt", []byte(json), 0644)
 		channels := parse.ParseChannelJson(json)
-		channelStats := map[string]Channel{}
+		channelStats := map[string]redis.Channel{}
 		for _, item := range channels.Items {
-			c := Channel{}
+			c := redis.Channel{}
 			c.ViewCount = item.Statistics.ViewCount
 			c.VideoCount = item.Statistics.VideoCount
 			c.SubscriberCount = item.Statistics.SubscriberCount
@@ -79,7 +64,7 @@ func QueryYoutubeUpdateRedis(word string) {
 			c := channelStats[v.ChannelId]
 			fmt.Printf("%05s %s\n", v.ViewCount, v.Title)
 			fmt.Printf("%05s %s\n", c.SubscriberCount, v.ChannelTitle)
-			redis.InsertItem(t.Unix(), v.Id, v.Title, v.ChannelTitle, v.ViewCount, v.ChannelId, c.SubscriberCount)
+			redis.InsertItem(t.Unix(), v)
 		}
 
 	}

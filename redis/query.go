@@ -5,29 +5,22 @@ import (
 	"time"
 )
 
-type RedisVideo struct {
-	Id        string
-	Title     string
-	ViewCount string
-	ChannelId string
-}
-
-func QueryHour() []RedisVideo {
+func QueryHour() []Video {
 	t := time.Now().In(utc)
 	t = t.Add(time.Hour * -1)
 	bucket := BucketForHour(t)
 	return QueryBucket(bucket)
 }
 
-func QueryBucket(b string) []RedisVideo {
-	list := []RedisVideo{}
+func QueryBucket(b string) []Video {
+	list := []Video{}
 	members, err := nc().SMembers(ctx, b).Result()
 	if err != nil {
 		fmt.Println(err)
 		return list
 	}
 	for _, item := range members {
-		v := RedisVideo{}
+		v := Video{}
 		v.Id = item
 		m := QueryAttributes(v.Id)
 		v.Title = m["title"]
