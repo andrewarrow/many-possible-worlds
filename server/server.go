@@ -15,7 +15,7 @@ func Serve(port string) {
 	prefix := ""
 	router.Static("/assets", prefix+"assets")
 	router.GET("/", WelcomeIndex)
-	router.GET("/query", QueryIndex)
+	router.GET("/pw/:world", QueryIndex)
 	router.NoRoute(NotFoundIndex)
 
 	AddTemplates(router, prefix)
