@@ -5,10 +5,10 @@ import (
 	"time"
 )
 
-func QueryDay() []Video {
+func QueryDay(slug string) []Video {
 	t := time.Now().In(utc)
 	t = t.Add(time.Hour * -1)
-	bucket := BucketForDay(t)
+	bucket := fmt.Sprintf("%s-%s", slug, BucketForDay(t))
 	return QueryBucket(bucket)
 }
 
@@ -30,16 +30,14 @@ func QueryBucket(b string) []Video {
 		return list
 	}
 	for _, item := range vals {
-		fmt.Println(int64(item.Score), item.Member)
-		/*
-			v := Video{}
-			v.Id = item
-			m := QueryAttributes(v.Id)
-			v.Title = m["title"]
-			v.ViewCount = m["view_count"]
-			v.ChannelId = m["c_id"]
-			list = append(list, v)
-		*/
+		v := Video{}
+		v.Id = item.Member.(string)
+		v.PublishedAt = int64(item.Score)
+		m := QueryAttributes(v.Id)
+		v.Title = m["title"]
+		v.ViewCount = m["view_count"]
+		v.ChannelId = m["c_id"]
+		list = append(list, v)
 	}
 
 	return list
