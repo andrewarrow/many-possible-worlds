@@ -36,6 +36,9 @@ func QueryBucket(b string) []Video {
 		v.Title = m["title"]
 		v.ViewCount = m["view_count"]
 		v.ChannelId = m["c_id"]
+		cmap := QueryAttributes(v.ChannelId)
+		v.ChannelTitle = cmap["title"]
+		v.Subs = cmap["subs"]
 		list = append(list, v)
 	}
 

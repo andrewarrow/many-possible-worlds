@@ -7,6 +7,7 @@ type Video struct {
 	ChannelTitle string
 	ChannelId    string
 	ViewCount    string
+	Subs         string
 }
 
 type Channel struct {
