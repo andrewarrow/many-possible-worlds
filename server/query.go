@@ -25,7 +25,7 @@ func QueryIndex(c *gin.Context) {
 func makeQueryHTML(slug string) string {
 	buffer := []string{}
 
-	items := redis.QueryDay(slug)
+	items, cmap := redis.QueryDay(slug)
 
 	buffer = append(buffer, "<div class=\"good-links\">")
 
@@ -40,7 +40,7 @@ func makeQueryHTML(slug string) string {
 		t := time.Unix(item.PublishedAt, 0)
 		buffer = append(buffer, fmt.Sprintf("view(s) %s</div>", t.Format(time.RFC850)))
 		buffer = append(buffer, "<div class=\"small\">")
-		buffer = append(buffer, fmt.Sprintf("by %s with %s sub(s)", item.ChannelTitle, item.Subs))
+		buffer = append(buffer, fmt.Sprintf("by %s with %s sub(s)", cmap[item.ChannelId].Title, cmap[item.ChannelId].SubscriberCount))
 		buffer = append(buffer, "</div>")
 		buffer = append(buffer, "</div>")
 	}

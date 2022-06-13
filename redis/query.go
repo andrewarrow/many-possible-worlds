@@ -5,13 +5,13 @@ import (
 	"time"
 )
 
-func QueryDay(slug string) []Video {
+func QueryDay(slug string) ([]Video, map[string]Channel) {
 	t := time.Now().In(utc)
 	bucket := fmt.Sprintf("%s-%s", slug, BucketForDay(t))
 	return QueryBucket(bucket)
 }
 
-func QueryBucket(b string) []Video {
+func QueryBucket(b string) ([]Video, map[string]Channel) {
 	list := []Video{}
 
 	/*
@@ -23,11 +23,13 @@ func QueryBucket(b string) []Video {
 	*/
 
 	vals, err := nc().ZRevRangeWithScores(ctx, b, 0, 100).Result()
+	cmap := map[string]Channel{}
 
 	if err != nil {
 		fmt.Println(err)
-		return list
+		return list, cmap
 	}
+	cidmap := map[string]bool{}
 	for _, item := range vals {
 		v := Video{}
 		v.Id = item.Member.(string)
@@ -36,13 +38,19 @@ func QueryBucket(b string) []Video {
 		v.Title = m["title"]
 		v.ViewCount = m["view_count"]
 		v.ChannelId = m["c_id"]
-		cmap := QueryAttributes(v.ChannelId)
-		v.ChannelTitle = cmap["title"]
-		v.Subs = cmap["subs"]
+		cidmap[v.ChannelId] = true
 		list = append(list, v)
 	}
 
-	return list
+	for cid, _ := range cidmap {
+		m := QueryAttributes(cid)
+		c := Channel{}
+		c.Title = m["title"]
+		c.SubscriberCount = m["subs"]
+		cmap[cid] = c
+	}
+
+	return list, cmap
 }
 
 func QueryAttributes(b string) map[string]string {

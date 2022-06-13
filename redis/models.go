@@ -14,6 +14,7 @@ type Channel struct {
 	ViewCount       string
 	VideoCount      string
 	SubscriberCount string
+	Title           string
 }
 
 type World struct {
