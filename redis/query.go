@@ -7,7 +7,6 @@ import (
 
 func QueryDay(slug string) []Video {
 	t := time.Now().In(utc)
-	t = t.Add(time.Hour * -1)
 	bucket := fmt.Sprintf("%s-%s", slug, BucketForDay(t))
 	return QueryBucket(bucket)
 }
