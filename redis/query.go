@@ -11,6 +11,12 @@ func QueryDay(slug string) ([]Video, map[string]Channel) {
 	return QueryBucket(bucket)
 }
 
+func QueryDayGems(slug string) ([]Video, map[string]Channel) {
+	t := time.Now().In(utc)
+	bucket := fmt.Sprintf("gem-%s-%s", slug, BucketForDay(t))
+	return QueryBucket(bucket)
+}
+
 func QueryBucket(b string) ([]Video, map[string]Channel) {
 	list := []Video{}
 

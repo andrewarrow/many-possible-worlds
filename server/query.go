@@ -26,9 +26,23 @@ func makeQueryHTML(slug string) string {
 	buffer := []string{}
 
 	items, cmap := redis.QueryDay(slug)
+	gitems, gcmap := redis.QueryDayGems(slug)
 
 	buffer = append(buffer, "<div class=\"good-links\">")
 
+	buffer = append(buffer, "<h2>Gems</h2>")
+	for _, item := range gitems {
+		buffer = append(buffer, "<div class=\"item\">")
+		buffer = append(buffer, "<div>")
+		buffer = append(buffer, fmt.Sprintf("<a href=\"/v/%s/%s\">%s</a>", slug, item.Id, item.Title))
+
+		buffer = append(buffer, "</div>")
+		buffer = append(buffer, "<div class=\"small\">")
+		buffer = append(buffer, fmt.Sprintf("by %s with %s sub(s)", gcmap[item.ChannelId].Title, gcmap[item.ChannelId].SubscriberCount))
+		buffer = append(buffer, "</div>")
+		buffer = append(buffer, "</div>")
+	}
+	buffer = append(buffer, "<h2>Fresh</h2>")
 	for _, item := range items {
 		buffer = append(buffer, "<div class=\"item\">")
 		buffer = append(buffer, "<div>")

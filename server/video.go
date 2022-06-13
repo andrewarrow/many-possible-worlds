@@ -1,6 +1,7 @@
 package server
 
 import (
+	"many-pw/redis"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -19,8 +20,9 @@ func VideoShow(c *gin.Context) {
 }
 
 func VideoGem(c *gin.Context) {
-	//id := c.Param("id")
+	id := c.Param("id")
 	slug := c.Param("slug")
+	redis.UpdateGemCount(slug, id)
 	c.Redirect(http.StatusFound, "/pw/"+slug)
 	c.Abort()
 }
