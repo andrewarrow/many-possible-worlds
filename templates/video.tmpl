@@ -21,5 +21,11 @@
               <p>
               <a href="https://www.youtube.com/watch?v={{.id}}">view on youtube</a>
               </p>
+    <div>
+    <br/>
+      <form method="POST" action="/v/{{.slug}}/{{.id}}/ungem">
+        <input type="submit" value="Un-Mark this video as a GEM in this world!"/>
+      </form>
+    </div>
 
 {{template "_footer" .}}

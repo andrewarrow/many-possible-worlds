@@ -18,6 +18,7 @@ func Serve(port string) {
 	router.GET("/pw/:world", QueryIndex)
 	router.GET("/v/:slug/:id", VideoShow)
 	router.POST("/v/:slug/:id/gem", VideoGem)
+	router.POST("/v/:slug/:id/ungem", VideoUnGem)
 	router.NoRoute(NotFoundIndex)
 
 	AddTemplates(router, prefix)
