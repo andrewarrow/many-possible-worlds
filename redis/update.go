@@ -8,7 +8,7 @@ import (
 func UpdateGemCount(slug, id string, val int) {
 	t := time.Now().In(utc)
 
-	bucket := fmt.Sprintf("gem-%s-%s", slug, BucketForDay(t))
+	bucket := fmt.Sprintf("gem-%s-%s", slug, BucketForMonth(t))
 	if val > 0 {
 		nc().ZIncrBy(ctx, bucket, 1.0, id).Err()
 	} else {

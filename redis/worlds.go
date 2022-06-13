@@ -13,6 +13,14 @@ func AllWorlds() []World {
 	w3.Slug = "this-just-happened"
 	w3.Title = "This JUST Happened"
 
-	items := []World{w1, w2, w3}
+	w4 := World{}
+	w4.Slug = "disaster"
+	w4.Title = "disaster"
+
+	w5 := World{}
+	w5.Slug = "collapse"
+	w5.Title = "collapse"
+
+	items := []World{w1, w2, w3, w4, w5}
 	return items
 }

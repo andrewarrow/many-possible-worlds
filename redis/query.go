@@ -13,8 +13,15 @@ func QueryDay(slug string) ([]Video, map[string]Channel) {
 
 func QueryDayGems(slug string) ([]Video, map[string]Channel) {
 	t := time.Now().In(utc)
-	bucket := fmt.Sprintf("gem-%s-%s", slug, BucketForDay(t))
+	bucket := fmt.Sprintf("gem-%s-%s", slug, BucketForMonth(t))
 	return QueryBucket(bucket)
+}
+
+func QueryDayCount(slug string) int64 {
+	t := time.Now().In(utc)
+	bucket := fmt.Sprintf("%s-%s", slug, BucketForDay(t))
+	count, _ := nc().ZCount(ctx, bucket, "-inf", "+inf").Result()
+	return count
 }
 
 func QueryBucket(b string) ([]Video, map[string]Channel) {
