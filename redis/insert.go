@@ -18,7 +18,7 @@ func InsertItem(v *Video, subs, slug string) {
 
 	subsInt, _ := strconv.ParseInt(subs, 10, 64)
 	// score is number of subs
-	// member is channel_id
+	// member is channel_id|channel_title
 	subzset := fmt.Sprintf("%s-s", slug)
 
 	// score is published_at int64
@@ -31,14 +31,12 @@ func InsertItem(v *Video, subs, slug string) {
 
 	rz1 := redis.Z{
 		Score:  float64(subsInt),
-		Member: v.ChannelId,
+		Member: v.ChannelId + "|" + v.ChannelTitle,
 	}
-
 	rz2 := redis.Z{
 		Score:  float64(v.PublishedAt),
 		Member: v.ChannelId,
 	}
-
 	rz3 := redis.Z{
 		Score:  float64(v.PublishedAt),
 		Member: v.Id,
