@@ -16,6 +16,7 @@ func Serve(port string) {
 	router.Static("/assets", prefix+"assets")
 	router.GET("/", WelcomeIndex)
 	router.GET("/pw/:world", QueryIndex)
+	router.GET("/v/:id", VideoShow)
 	router.NoRoute(NotFoundIndex)
 
 	AddTemplates(router, prefix)
