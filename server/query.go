@@ -32,7 +32,7 @@ func makeQueryHTML(slug string) string {
 	for _, item := range items {
 		buffer = append(buffer, "<div class=\"item\">")
 		buffer = append(buffer, "<div>")
-		buffer = append(buffer, fmt.Sprintf("<a href=\"/v/%s\">%s</a>", item.Id, item.Title))
+		buffer = append(buffer, fmt.Sprintf("<a href=\"/v/%s/%s\">%s</a>", slug, item.Id, item.Title))
 
 		buffer = append(buffer, "</div>")
 		buffer = append(buffer, "<div class=\"small\">")
