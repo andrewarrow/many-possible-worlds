@@ -29,7 +29,7 @@ func makeQueryHTML(slug string, offset int) string {
 	buffer := []string{}
 
 	count := redis.QueryDayCount(slug)
-	items, cmap := redis.QueryDay(slug)
+	items, cmap := redis.QueryDay(slug, offset)
 	gitems, gcmap := redis.QueryDayGems(slug)
 
 	buffer = append(buffer, "<div class=\"good-links\">")
@@ -66,7 +66,7 @@ func makeQueryHTML(slug string, offset int) string {
 
 	buffer = append(buffer, "</div>")
 	buffer = append(buffer, "<div>")
-	buffer = append(buffer, fmt.Sprintf("<a href=\"?offset=%d\">Load Next 50</a>", 50))
+	buffer = append(buffer, fmt.Sprintf("<a href=\"?offset=%d\">Load Next 50</a>", offset+50))
 	buffer = append(buffer, "</div>")
 	return strings.Join(buffer, "\n")
 }

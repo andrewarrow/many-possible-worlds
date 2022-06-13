@@ -5,16 +5,16 @@ import (
 	"time"
 )
 
-func QueryDay(slug string) ([]Video, map[string]Channel) {
+func QueryDay(slug string, offset int) ([]Video, map[string]Channel) {
 	t := time.Now().In(utc)
 	bucket := fmt.Sprintf("%s-%s", slug, BucketForDay(t))
-	return QueryBucket(bucket)
+	return QueryBucket(bucket, offset)
 }
 
 func QueryDayGems(slug string) ([]Video, map[string]Channel) {
 	t := time.Now().In(utc)
 	bucket := fmt.Sprintf("gem-%s-%s", slug, BucketForMonth(t))
-	return QueryBucket(bucket)
+	return QueryBucket(bucket, 0)
 }
 
 func QueryDayCount(slug string) int64 {
@@ -24,18 +24,10 @@ func QueryDayCount(slug string) int64 {
 	return count
 }
 
-func QueryBucket(b string) ([]Video, map[string]Channel) {
+func QueryBucket(b string, offset int) ([]Video, map[string]Channel) {
 	list := []Video{}
 
-	/*
-		members, err := nc().ZRevRangeByScore(ctx, b, &redis.ZRangeBy{
-			Min: "-inf",
-			Max: "+inf",
-		}).Result()
-
-	*/
-
-	vals, err := nc().ZRevRangeWithScores(ctx, b, 0, 100).Result()
+	vals, err := nc().ZRevRangeWithScores(ctx, b, int64(offset), int64(offset+50)).Result()
 	cmap := map[string]Channel{}
 
 	if err != nil {
