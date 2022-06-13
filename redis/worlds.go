@@ -9,11 +9,10 @@ func AllWorlds() []World {
 	w2.Slug = "law-of-attraction"
 	w2.Title = "Law of Attraction"
 
-	items := []World{w1, w2}
-
 	w3 := World{}
 	w3.Slug = "this-just-happened"
 	w3.Title = "This JUST Happened"
-	items = []World{w3}
+
+	items := []World{w1, w2, w3}
 	return items
 }
