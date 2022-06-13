@@ -14,4 +14,7 @@ func UpdateGemCount(slug, id string, val int) {
 	} else {
 		nc().ZRem(ctx, bucket, id).Err()
 	}
+
+	expireTime := time.Now().Add(time.Hour * 24 * 30 * 12 * 2)
+	nc().ExpireAt(ctx, bucket, expireTime)
 }
