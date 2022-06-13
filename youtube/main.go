@@ -5,7 +5,6 @@ import (
 	"many-pw/network"
 	"many-pw/parse"
 	"many-pw/redis"
-	"time"
 )
 
 func main() {
@@ -17,7 +16,6 @@ func main() {
 }
 
 func QueryYoutubeUpdateRedis(w redis.World) {
-	t := time.Now()
 	json := network.SearchWord(w.Title)
 	if json != "" {
 
@@ -64,7 +62,7 @@ func QueryYoutubeUpdateRedis(w redis.World) {
 			c := channelStats[v.ChannelId]
 			fmt.Printf("%05s %s\n", v.ViewCount, v.Title)
 			fmt.Printf("%05s %s\n", c.SubscriberCount, v.ChannelTitle)
-			redis.InsertItem(t.Unix(), v, c.SubscriberCount, w.Slug)
+			redis.InsertItem(v, c.SubscriberCount, w.Slug)
 		}
 
 	}

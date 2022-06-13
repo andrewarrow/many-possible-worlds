@@ -24,6 +24,21 @@ func QueryDayCount(slug string) int64 {
 	return count
 }
 
+func QueryChannelsInSlug(slug string, offset int) []Channel {
+	list := []Channel{}
+
+	subzset := fmt.Sprintf("%s-s", slug)
+	vals, _ := nc().ZRevRangeWithScores(ctx, subzset, int64(0), int64(50)).Result()
+	for _, item := range vals {
+		c := Channel{}
+		c.Id = item.Member.(string)
+		c.SubscriberCount = fmt.Sprintf("%d", int64(item.Score))
+		list = append(list, c)
+	}
+
+	return list
+}
+
 func QueryBucket(b string, offset int) ([]Video, map[string]Channel) {
 	list := []Video{}
 
