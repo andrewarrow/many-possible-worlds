@@ -37,7 +37,9 @@ func makeQueryHTML(slug string, offset int) string {
 
 		buffer = append(buffer, "</div>")
 		buffer = append(buffer, "<div class=\"small\">")
-		buffer = append(buffer, fmt.Sprintf("by %s with %s sub(s)", "Title", item.SubscriberCount))
+		t := time.Unix(item.PublishedAt, 0)
+		buffer = append(buffer, fmt.Sprintf("%s sub(s) %s",
+			item.SubscriberCount, t.Format(time.RFC850)))
 		buffer = append(buffer, "</div>")
 		buffer = append(buffer, "</div>")
 	}

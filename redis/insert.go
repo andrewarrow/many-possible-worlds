@@ -17,6 +17,9 @@ func init() {
 func InsertItem(v *Video, subs, slug string) {
 
 	subsInt, _ := strconv.ParseInt(subs, 10, 64)
+	if subsInt > 2000 {
+		return
+	}
 	// score is number of subs
 	// member is channel_id|channel_title
 	subzset := fmt.Sprintf("%s-s", slug)

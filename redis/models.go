@@ -16,6 +16,7 @@ type Channel struct {
 	SubscriberCount string
 	Title           string
 	Id              string
+	PublishedAt     int64
 }
 
 type World struct {
