@@ -56,8 +56,6 @@ func InsertItem(v *Video, subs, slug string) {
 	}
 	vals, _ := nc().ZRangeByScore(ctx, pubzset, &zrb).Result()
 	for _, member := range vals {
-		vidzset := fmt.Sprintf("%s-v", member)
-		nc().Del(ctx, vidzset).Err()
 		nc().ZRem(ctx, subzset, member).Err()
 		nc().ZRem(ctx, pubzset, member).Err()
 	}
@@ -72,4 +70,5 @@ func InsertItem(v *Video, subs, slug string) {
 	expireTime := time.Now().Add(time.Hour * 24 * 30 * 12 * 2)
 	//nc().ExpireAt(ctx, v.Id, expireTime)
 	nc().ExpireAt(ctx, v.ChannelId, expireTime)
+	nc().ExpireAt(ctx, vidzset, expireTime)
 }
