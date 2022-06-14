@@ -21,6 +21,7 @@ func Serve(port string) {
 	router.GET("/v/:slug/:id", VideoShow)
 	router.POST("/v/:slug/:id/gem", VideoGem)
 	router.POST("/v/:slug/:id/ungem", VideoUnGem)
+	router.POST("/login", LoginSubmit)
 	router.NoRoute(NotFoundIndex)
 
 	AddTemplates(router, prefix)
