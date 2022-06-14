@@ -62,7 +62,7 @@ func InsertItem(v *Video, subs, slug string) {
 		nc().ZRem(ctx, pubzset, member).Err()
 	}
 
-	nc().HSet(ctx, v.Id, "title", v.Title).Err()
+	//nc().HSet(ctx, v.Id, "title", v.Title).Err()
 	//nc().HSet(ctx, v.Id, "view_count", v.ViewCount).Err()
 	//nc().HSet(ctx, v.Id, "c_id", v.ChannelId).Err()
 
@@ -70,6 +70,6 @@ func InsertItem(v *Video, subs, slug string) {
 	//nc().HSet(ctx, v.ChannelId, "subs", subs).Err()
 
 	expireTime := time.Now().Add(time.Hour * 24 * 30 * 12 * 2)
-	nc().ExpireAt(ctx, v.Id, expireTime)
+	//nc().ExpireAt(ctx, v.Id, expireTime)
 	nc().ExpireAt(ctx, v.ChannelId, expireTime)
 }

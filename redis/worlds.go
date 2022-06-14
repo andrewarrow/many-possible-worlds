@@ -10,16 +10,16 @@ func AllWorlds() []World {
 	w2.Title = "Law of Attraction"
 
 	w3 := World{}
-	w3.Slug = "this-just-happened"
-	w3.Title = "This JUST Happened"
+	w3.Slug = "spirituality"
+	w3.Title = "spirituality"
 
 	w4 := World{}
-	w4.Slug = "disaster"
-	w4.Title = "disaster"
+	w4.Slug = "awakening"
+	w4.Title = "awakening"
 
 	w5 := World{}
-	w5.Slug = "collapse"
-	w5.Title = "collapse"
+	w5.Slug = "non-duality"
+	w5.Title = "non-duality"
 
 	items := []World{w1, w2, w3, w4, w5}
 	//items := []World{w1}
