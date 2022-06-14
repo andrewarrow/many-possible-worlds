@@ -18,8 +18,7 @@ func LoginIndex(c *gin.Context) {
 }
 
 func LoginSubmit(c *gin.Context) {
-	//email := c.FormPost("email")
-	password := c.Param("password")
+	password := c.PostForm("password")
 	if password == os.Getenv("MANY_PW_PASSWORD") {
 		uuid := pseudoUuid()
 		redis.SetAuth(uuid)
