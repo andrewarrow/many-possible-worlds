@@ -18,9 +18,11 @@
       <a href="https://www.youtube.com/watch?v={{$v.Id}}">view on youtube</a>
       </p>
       {{ if ne $.auth "" }}
-      <p>
-      auth
-      </p>
+        <div>
+          <form method="POST" action="/c/{{$.slug}}/{{$.id}}/gem">
+            <input type="submit" value="Mark this channel as a GEM in this world!"/>
+          </form>
+        </div>
       {{ end }}
     </div>
     {{ end }}

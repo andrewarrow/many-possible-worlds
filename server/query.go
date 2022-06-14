@@ -30,6 +30,19 @@ func makeQueryHTML(slug string, offset int) string {
 	items := redis.QueryChannelsInSlug(slug, 0)
 	buffer = append(buffer, "<div class=\"good-links\">")
 
+	buffer = append(buffer, "<h2>Pinned</h2>")
+	gems := []int{1, 2, 3}
+	for _, gem := range gems {
+		fmt.Println(gem)
+		buffer = append(buffer, "<div class=\"item\">")
+		buffer = append(buffer, "<div>")
+		buffer = append(buffer, fmt.Sprintf("<a href=\"/c/%s/%s\">%s</a>", "hi", "Id", "New Life Frequencies"))
+
+		buffer = append(buffer, "</div>")
+		buffer = append(buffer, "</div>")
+	}
+
+	buffer = append(buffer, "<h2>Latest</h2>")
 	for _, item := range items {
 		buffer = append(buffer, "<div class=\"item\">")
 		buffer = append(buffer, "<div>")

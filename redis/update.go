@@ -3,14 +3,19 @@ package redis
 import (
 	"fmt"
 	"time"
+
+	"github.com/go-redis/redis/v8"
 )
 
 func UpdateGemCount(slug, id string, val int) {
-	t := time.Now().In(utc)
-
-	bucket := fmt.Sprintf("gem-%s-%s", slug, BucketForMonth(t))
+	bucket := fmt.Sprintf("gem-%s", slug)
 	if val > 0 {
-		nc().ZIncrBy(ctx, bucket, 1.0, id).Err()
+		rz := redis.Z{
+			Score:  float64(time.Now().Unix()),
+			Member: id,
+		}
+
+		nc().ZAdd(ctx, bucket, &rz).Err()
 	} else {
 		nc().ZRem(ctx, bucket, id).Err()
 	}
