@@ -17,6 +17,11 @@
       <p>
       <a href="https://www.youtube.com/watch?v={{$v.Id}}">view on youtube</a>
       </p>
+      {{ if ne $.auth "" }}
+      <p>
+      auth
+      </p>
+      {{ end }}
     </div>
     {{ end }}
 

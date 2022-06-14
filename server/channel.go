@@ -14,10 +14,18 @@ func ChannelShow(c *gin.Context) {
 
 	items := redis.QueryVideosInChannel(id, 0)
 
+	cookieAuth, _ := c.Cookie("auth")
+	redisAuth := redis.GetAuth()
+	auth := ""
+	if redisAuth != "" && cookieAuth == redisAuth {
+		auth = "auth"
+	}
+
 	c.HTML(http.StatusOK, "channel.tmpl", gin.H{
 		"flash": "",
 		"id":    id,
 		"items": items,
+		"auth":  auth,
 		"slug":  slug,
 	})
 }
