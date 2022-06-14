@@ -2,7 +2,6 @@ package redis
 
 import (
 	"fmt"
-	"strings"
 	"time"
 )
 
@@ -32,11 +31,8 @@ func QueryChannelsInSlug(slug string, offset int) []Channel {
 	vals, _ := nc().ZRevRangeWithScores(ctx, subzset, int64(0), int64(50)).Result()
 	for _, item := range vals {
 		c := Channel{}
-		c.PublishedAt = int64(item.Score)
-		payload := item.Member.(string)
-		indexOfBar := strings.Index(payload, "|")
-		c.Id = payload[0:indexOfBar]
-		c.Title = payload[indexOfBar+1:]
+		c.Id = item.Member.(string)
+		//c.Title = payload[indexOfBar+1:]
 		c.SubscriberCount = fmt.Sprintf("%d", int64(item.Score))
 		list = append(list, c)
 	}

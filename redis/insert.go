@@ -21,7 +21,7 @@ func InsertItem(v *Video, subs, slug string) {
 		return
 	}
 	// score is number of subs
-	// member is channel_id|channel_title
+	// member is channel_id
 	subzset := fmt.Sprintf("%s-s", slug)
 
 	// score is published_at int64
@@ -34,7 +34,7 @@ func InsertItem(v *Video, subs, slug string) {
 
 	rz1 := redis.Z{
 		Score:  float64(subsInt),
-		Member: v.ChannelId + "|" + v.ChannelTitle,
+		Member: v.ChannelId,
 	}
 	rz2 := redis.Z{
 		Score:  float64(v.PublishedAt),
@@ -48,6 +48,19 @@ func InsertItem(v *Video, subs, slug string) {
 	nc().ZAdd(ctx, subzset, &rz1).Err()
 	nc().ZAdd(ctx, pubzset, &rz2).Err()
 	nc().ZAdd(ctx, vidzset, &rz3).Err()
+
+	ts := time.Now().Unix() - 86400
+	zrb := redis.ZRangeBy{
+		Min: "0",
+		Max: fmt.Sprintf("%d", ts),
+	}
+	vals, _ := nc().ZRangeByScore(ctx, pubzset, &zrb).Result()
+	for _, member := range vals {
+		vidzset := fmt.Sprintf("%s-v", member)
+		nc().Del(ctx, vidzset).Err()
+		nc().ZRem(ctx, subzset, member).Err()
+		nc().ZRem(ctx, pubzset, member).Err()
+	}
 
 	nc().HSet(ctx, v.Id, "title", v.Title).Err()
 	//nc().HSet(ctx, v.Id, "view_count", v.ViewCount).Err()
