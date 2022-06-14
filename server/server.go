@@ -16,6 +16,7 @@ func Serve(port string) {
 	router.Static("/assets", prefix+"assets")
 	router.GET("/", WelcomeIndex)
 	router.GET("/pw/:world", QueryIndex)
+	router.GET("/c/:slug/:id", ChannelShow)
 	router.GET("/v/:slug/:id", VideoShow)
 	router.POST("/v/:slug/:id/gem", VideoGem)
 	router.POST("/v/:slug/:id/ungem", VideoUnGem)
