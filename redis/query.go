@@ -32,9 +32,25 @@ func QueryChannelsInSlug(slug string, offset int) []Channel {
 	for _, item := range vals {
 		c := Channel{}
 		c.Id = item.Member.(string)
-		//c.Title = payload[indexOfBar+1:]
+		m := QueryAttributes(c.Id)
+		c.Title = m["title"]
 		c.SubscriberCount = fmt.Sprintf("%d", int64(item.Score))
 		list = append(list, c)
+	}
+
+	return list
+}
+
+func QueryVideosInChannel(cid string, offset int) []Video {
+	list := []Video{}
+
+	vidzset := fmt.Sprintf("%s-v", cid)
+	vals, _ := nc().ZRevRangeWithScores(ctx, vidzset, int64(0), int64(50)).Result()
+	for _, item := range vals {
+		v := Video{}
+		v.Id = item.Member.(string)
+		v.PublishedAt = int64(item.Score)
+		list = append(list, v)
 	}
 
 	return list

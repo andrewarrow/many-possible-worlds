@@ -21,7 +21,7 @@ func AllWorlds() []World {
 	w5.Slug = "collapse"
 	w5.Title = "collapse"
 
-	//items := []World{w1, w2, w3, w4, w5}
-	items := []World{w1}
+	items := []World{w1, w2, w3, w4, w5}
+	//items := []World{w1}
 	return items
 }
