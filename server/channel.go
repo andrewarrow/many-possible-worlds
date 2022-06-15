@@ -53,6 +53,11 @@ func ModInWorld(c *gin.Context) bool {
 	return ok
 }
 
+func ChannelIndex(c *gin.Context) {
+	slug := c.Param("slug")
+	c.Redirect(http.StatusFound, "/w/"+slug)
+	c.Abort()
+}
 func ChannelGem(c *gin.Context) {
 	slug := c.Param("slug")
 	if !ModInWorld(c) {
