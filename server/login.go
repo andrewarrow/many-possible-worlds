@@ -5,6 +5,7 @@ import (
 	"many-pw/redis"
 	"math/rand"
 	"net/http"
+	"strings"
 
 	"github.com/gin-gonic/gin"
 )
@@ -26,8 +27,8 @@ func LoginSubmit(c *gin.Context) {
 		FlashAndReturnLogin(c, "You must agree to cookies")
 		return
 	}
-	password := c.PostForm("password")
-	email := c.PostForm("email")
+	password := strings.TrimSpace(c.PostForm("password"))
+	email := strings.TrimSpace(c.PostForm("email"))
 
 	existing := redis.LookupEmail(email)
 	if existing != password {
