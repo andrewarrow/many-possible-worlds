@@ -15,7 +15,7 @@ func RegisterSubmit(c *gin.Context) {
 		return
 	}
 	email := strings.TrimSpace(c.PostForm("email"))
-	if len(email) < 7 || strings.Index(email, "@") == -1 || strings.Index(email, ".") == -1 {
+	if len(email) < 7 || strings.Index(email, "@") == -1 || strings.Index(email, ".") == -1 || len(email) > 50 {
 		FlashAndReturnLogin(c, "Email is not valid.")
 		return
 	}
