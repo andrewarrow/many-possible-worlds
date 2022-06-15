@@ -18,6 +18,7 @@ func Serve(port string) {
 	router.GET("/login", LoginIndex)
 	router.GET("/how-it-works", HowIndex)
 	router.GET("/welcome-new-user", NewUserIndex)
+	router.GET("/add-world", AddWorldIndex)
 	router.GET("/w/:world", QueryIndex)
 	router.GET("/c/:slug/:id", ChannelShow)
 	router.GET("/v/:slug/:id", VideoShow)
@@ -27,6 +28,7 @@ func Serve(port string) {
 	router.POST("/login", LoginSubmit)
 	router.POST("/logout", LogoutSubmit)
 	router.POST("/register", RegisterSubmit)
+	router.POST("/add-world", AddWorldSubmit)
 	router.NoRoute(NotFoundIndex)
 
 	AddTemplates(router, prefix)

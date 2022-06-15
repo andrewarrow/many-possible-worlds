@@ -1,5 +1,11 @@
 package redis
 
+import (
+	"time"
+
+	"github.com/go-redis/redis/v8"
+)
+
 func AllWorlds() []World {
 	w1 := World{}
 	w1.Slug = "meditation"
@@ -24,4 +30,18 @@ func AllWorlds() []World {
 	items := []World{w1, w2, w3, w4, w5}
 	//items := []World{w1}
 	return items
+}
+
+func InsertWorld(q, slug string) {
+	zset := "worlds"
+	rz := redis.Z{
+		Score:  float64(0),
+		Member: slug,
+	}
+
+	nc().ZAdd(ctx, zset, &rz).Err()
+	nc().HSet(ctx, slug, "q", q).Err()
+
+	expireTime := time.Now().Add(time.Hour * 24 * 30 * 12 * 2)
+	nc().ExpireAt(ctx, slug, expireTime)
 }

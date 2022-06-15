@@ -1,0 +1,22 @@
+{{template "_header" .}}
+
+<main>
+  <div class="container">
+
+    <div class="good-links">
+      <h1><a href="/">many.pw</a></h1>
+    </div>
+    <p class="lead">Many Possible Worlds!</p>
+
+    <div>
+      <form method="POST" action="/add-world">
+              <p>
+        <input type="text" name="q" placeholder="search phrase"/>
+              </p>
+              <p>
+        <input type="submit" value="Add World"/>
+              </p>
+      </form>
+    </div>
+
+{{template "_footer" .}}
