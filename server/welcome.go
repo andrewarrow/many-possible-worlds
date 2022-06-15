@@ -29,7 +29,7 @@ func makeWelcomeHTML() string {
 		buffer = append(buffer, "<div class=\"item\">")
 		buffer = append(buffer, "<div>")
 		//buffer = append(buffer, fmt.Sprintf("<a href=\"https://youtube.com/watch?v=%s\">%s</a>", item.Id, item.Title))
-		buffer = append(buffer, fmt.Sprintf("<a href=\"/pw/%s\">%s</a>", w.Slug, w.Title))
+		buffer = append(buffer, fmt.Sprintf("<a href=\"/w/%s\">%s</a>", w.Slug, w.Title))
 
 		buffer = append(buffer, "</div>")
 		//buffer = append(buffer, "<div>")

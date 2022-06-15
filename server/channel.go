@@ -34,6 +34,6 @@ func ChannelGem(c *gin.Context) {
 	id := c.Param("id")
 	slug := c.Param("slug")
 	redis.UpdateGemCount(slug, id, 1)
-	c.Redirect(http.StatusFound, "/pw/"+slug)
+	c.Redirect(http.StatusFound, "/w/"+slug)
 	c.Abort()
 }
