@@ -37,15 +37,16 @@ func QueryYoutubeUpdateRedis(w redis.World) {
 			ids = append(ids, v.Id)
 			cmap[item.Snippet.ChannelId] = true
 		}
-		json = network.SearchVideos(ids)
-		if json != "" {
-			stats := parse.ParseStatJson(json)
-			for _, stat := range stats.Items {
-				v := vmap[stat.Id]
-				v.ViewCount = stat.Statistics.ViewCount
-				//fmt.Println(stat.Id, stat.Statistics.ViewCount)
-			}
-		}
+		/*
+			json = network.SearchVideos(ids)
+			if json != "" {
+				stats := parse.ParseStatJson(json)
+				for _, stat := range stats.Items {
+					v := vmap[stat.Id]
+					v.ViewCount = stat.Statistics.ViewCount
+					//fmt.Println(stat.Id, stat.Statistics.ViewCount)
+				}
+			}*/
 		json = network.GetChannels(cmap)
 		//ioutil.WriteFile("fname.txt", []byte(json), 0644)
 		channels := parse.ParseChannelJson(json)
