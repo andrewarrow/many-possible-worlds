@@ -17,6 +17,7 @@ func Serve(port string) {
 	router.GET("/", WelcomeIndex)
 	router.GET("/login", LoginIndex)
 	router.GET("/how-it-works", HowIndex)
+	router.GET("/welcome-new-user", NewUserIndex)
 	router.GET("/w/:world", QueryIndex)
 	router.GET("/c/:slug/:id", ChannelShow)
 	router.GET("/v/:slug/:id", VideoShow)
