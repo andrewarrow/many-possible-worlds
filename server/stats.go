@@ -14,12 +14,15 @@ import (
 var stats = []string{}
 
 func BumpStats(route string, c *gin.Context) {
+	ip := c.ClientIP()
+	if ip == os.Getenv("MANY_PW_ADMIN_IP") {
+		return
+	}
 	refs := c.Request.Header["Referer"]
 	ref := ""
 	if len(refs) > 0 {
 		ref = refs[0]
 	}
-	ip := c.ClientIP()
 	if len(stats) > 1000 {
 		stats = []string{}
 	}
