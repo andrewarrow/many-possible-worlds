@@ -26,7 +26,7 @@ func RegisterSubmit(c *gin.Context) {
 		return
 	}
 
-	BumpStats("register", c.ClientIP())
+	BumpStats("register", c)
 	password := pseudoUuid()
 	redis.SaveEmailPassword(email, password)
 	c.SetCookie("email", email, 3600*24*365*10, "/", "", false, true)

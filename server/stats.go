@@ -13,11 +13,17 @@ import (
 
 var stats = []string{}
 
-func BumpStats(route, ip string) {
+func BumpStats(route string, c *gin.Context) {
+	refs := c.Request.Header["Referer"]
+	ref := ""
+	if len(refs) > 0 {
+		ref = refs[0]
+	}
+	ip := c.ClientIP()
 	if len(stats) > 1000 {
 		stats = []string{}
 	}
-	payload := fmt.Sprintf("%d/%s/%s", time.Now().Unix(), ip, route)
+	payload := fmt.Sprintf("%d/%s/%s/%s", time.Now().Unix(), ip, route, ref)
 	stats = append([]string{payload}, stats...)
 }
 

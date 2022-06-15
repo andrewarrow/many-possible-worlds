@@ -8,7 +8,7 @@ import (
 
 func HowIndex(c *gin.Context) {
 
-	BumpStats("how", c.ClientIP())
+	BumpStats("how", c)
 	c.HTML(http.StatusOK, "how.tmpl", gin.H{
 		"flash": "",
 		"email": "",

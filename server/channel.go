@@ -12,7 +12,7 @@ func ChannelShow(c *gin.Context) {
 
 	id := c.Param("id")
 	slug := c.Param("slug")
-	BumpStats(slug+"/"+id, c.ClientIP())
+	BumpStats(slug+"/"+id, c)
 
 	items := redis.QueryVideosInChannel(id, 0)
 
