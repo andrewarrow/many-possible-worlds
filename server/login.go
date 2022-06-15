@@ -43,6 +43,14 @@ func LoginSubmit(c *gin.Context) {
 
 }
 
+func LogoutSubmit(c *gin.Context) {
+	c.SetCookie("email", "", 3600*24*365*10, "/", "", false, true)
+	c.SetCookie("password", "", 3600*24*365*10, "/", "", false, true)
+	c.Redirect(http.StatusFound, "/")
+	c.Abort()
+
+}
+
 func pseudoUuid() string {
 
 	b := make([]byte, 16)

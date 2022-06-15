@@ -25,6 +25,7 @@ func Serve(port string) {
 	router.POST("/v/:slug/:id/gem", VideoGem)
 	router.POST("/v/:slug/:id/ungem", VideoUnGem)
 	router.POST("/login", LoginSubmit)
+	router.POST("/logout", LogoutSubmit)
 	router.POST("/register", RegisterSubmit)
 	router.NoRoute(NotFoundIndex)
 

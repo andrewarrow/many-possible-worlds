@@ -14,9 +14,18 @@ func WelcomeIndex(c *gin.Context) {
 
 	body := template.HTML(makeWelcomeHTML())
 
+	email, _ := c.Cookie("email")
+	password, _ := c.Cookie("password")
+	loggedInAs := ""
+
+	existing := redis.LookupEmail(email)
+	if existing == password {
+		loggedInAs = email
+	}
+
 	c.HTML(http.StatusOK, "index.tmpl", gin.H{
 		"flash": "",
-		"email": "",
+		"email": loggedInAs,
 		"body":  body,
 	})
 }
