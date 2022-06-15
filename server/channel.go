@@ -23,6 +23,7 @@ func ChannelShow(c *gin.Context) {
 
 	c.HTML(http.StatusOK, "channel.tmpl", gin.H{
 		"flash": "",
+		"email": "",
 		"id":    id,
 		"items": items,
 		"auth":  auth,

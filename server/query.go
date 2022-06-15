@@ -20,6 +20,7 @@ func QueryIndex(c *gin.Context) {
 	body := template.HTML(makeQueryHTML(slug, offsetInt))
 
 	c.HTML(http.StatusOK, "index.tmpl", gin.H{
+		"email": "",
 		"flash": "",
 		"body":  body,
 	})

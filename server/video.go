@@ -14,6 +14,7 @@ func VideoShow(c *gin.Context) {
 
 	c.HTML(http.StatusOK, "video.tmpl", gin.H{
 		"flash": "",
+		"email": "",
 		"id":    id,
 		"slug":  slug,
 	})

@@ -10,5 +10,6 @@ func HowIndex(c *gin.Context) {
 
 	c.HTML(http.StatusOK, "how.tmpl", gin.H{
 		"flash": "",
+		"email": "",
 	})
 }

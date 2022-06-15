@@ -16,6 +16,22 @@
   <div>
           <a href="/how-it-works">How It Works</a>
   </div>
+
+
+<div>
+        {{if ne .email ""}}
+          you are logged in as {{.email}}
+        <a href="#" onclick="event.preventDefault(); logOut();">Log Out</a>
+        <form id="out" method="POST" action="/logout"> </form>
+        <script>
+        function logOut() {
+          document.getElementById("out").submit();
+        }
+        </script>
+        {{end}}
+</div>
+
+
 </main>
 
 
