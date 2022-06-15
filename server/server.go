@@ -23,6 +23,7 @@ func Serve(port string) {
 	router.GET("/c/:slug/:id", ChannelShow)
 	router.GET("/v/:slug/:id", VideoShow)
 	router.POST("/c/:slug/:id/gem", ChannelGem)
+	router.POST("/c/:slug/:id/ungem", ChannelUnGem)
 	router.POST("/v/:slug/:id/gem", VideoGem)
 	router.POST("/v/:slug/:id/ungem", VideoUnGem)
 	router.POST("/login", LoginSubmit)

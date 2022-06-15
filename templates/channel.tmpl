@@ -21,6 +21,12 @@
             <input type="submit" value="Mark this channel as a GEM in this world!"/>
           </form>
         </div>
+        <div>&nbsp;</div>
+        <div>
+          <form method="POST" action="/c/{{$.slug}}/{{$.id}}/ungem">
+            <input type="submit" value="Un-Mark this channel as a GEM in this world!"/>
+          </form>
+        </div>
       {{ end }}
     </div>
     {{ end }}

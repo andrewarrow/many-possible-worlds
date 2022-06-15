@@ -1,12 +1,17 @@
 package redis
 
-import "time"
-
 func SetAuth(uuid string) {
-	exp := time.Hour * 24 * 30 * 12 * 2
-	nc().Set(ctx, "auth", uuid, exp).Err()
 }
-func GetAuth() string {
-	val, _ := nc().Get(ctx, "auth").Result()
-	return val
+func GetAuth(email, password string) string {
+	m, _ := nc().HGetAll(ctx, email).Result()
+	if len(m) == 0 {
+		return ""
+	}
+	if m["pass"] != password {
+		return ""
+	}
+	if m["all"] == "1" {
+		return "all"
+	}
+	return m["worlds"]
 }

@@ -49,5 +49,7 @@ func makeWelcomeHTML() string {
 	}
 
 	buffer = append(buffer, "</div>")
+	buffer = append(buffer, "<div class=\"small\">Contact us to suggest a new world!")
+	buffer = append(buffer, "</div>")
 	return strings.Join(buffer, "\n")
 }
