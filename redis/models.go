@@ -22,4 +22,5 @@ type Channel struct {
 type World struct {
 	Slug  string
 	Title string
+	Score int64
 }

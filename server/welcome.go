@@ -35,7 +35,7 @@ func makeWelcomeHTML() string {
 
 	buffer = append(buffer, "<div class=\"good-links\">")
 
-	for _, w := range redis.AllWorlds() {
+	for _, w := range redis.QueryWorlds() {
 		buffer = append(buffer, "<div class=\"item\">")
 		buffer = append(buffer, "<div>")
 		//buffer = append(buffer, fmt.Sprintf("<a href=\"https://youtube.com/watch?v=%s\">%s</a>", item.Id, item.Title))

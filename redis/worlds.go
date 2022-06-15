@@ -6,36 +6,10 @@ import (
 	"github.com/go-redis/redis/v8"
 )
 
-func AllWorlds() []World {
-	w1 := World{}
-	w1.Slug = "meditation"
-	w1.Title = "meditation"
-
-	w2 := World{}
-	w2.Slug = "law-of-attraction"
-	w2.Title = "Law of Attraction"
-
-	w3 := World{}
-	w3.Slug = "spirituality"
-	w3.Title = "spirituality"
-
-	w4 := World{}
-	w4.Slug = "awakening"
-	w4.Title = "awakening"
-
-	w5 := World{}
-	w5.Slug = "non-duality"
-	w5.Title = "non-duality"
-
-	items := []World{w1, w2, w3, w4, w5}
-	//items := []World{w1}
-	return items
-}
-
 func InsertWorld(q, slug string) {
 	zset := "worlds"
 	rz := redis.Z{
-		Score:  float64(0),
+		Score:  float64(time.Now().Unix()),
 		Member: slug,
 	}
 
@@ -44,4 +18,21 @@ func InsertWorld(q, slug string) {
 
 	expireTime := time.Now().Add(time.Hour * 24 * 30 * 12 * 2)
 	nc().ExpireAt(ctx, slug, expireTime)
+}
+
+func QueryWorlds() []World {
+	list := []World{}
+
+	zset := "worlds"
+	vals, _ := nc().ZRevRangeWithScores(ctx, zset, int64(0), int64(50)).Result()
+	for _, item := range vals {
+		w := World{}
+		w.Slug = item.Member.(string)
+		m := QueryAttributes(w.Slug)
+		w.Title = m["q"]
+		w.Score = int64(item.Score)
+		list = append(list, w)
+	}
+
+	return list
 }

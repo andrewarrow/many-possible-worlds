@@ -10,7 +10,7 @@ import (
 func main() {
 	//words := []string{"meditation", "spirituality", "awakening", "law of attraction", "ego", "self hypnosis", "manifestation", "zen master", "non-duality", "healing", "thoughts"}
 	//words := []string{"meditation"}
-	for _, w := range redis.AllWorlds() {
+	for _, w := range redis.QueryWorlds() {
 		QueryYoutubeUpdateRedis(w)
 	}
 }
