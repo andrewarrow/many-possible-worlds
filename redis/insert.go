@@ -65,7 +65,7 @@ func InsertItem(v *Video, subs, slug string) {
 	//nc().HSet(ctx, v.Id, "c_id", v.ChannelId).Err()
 
 	nc().HSet(ctx, v.ChannelId, "title", v.ChannelTitle).Err()
-	//nc().HSet(ctx, v.ChannelId, "subs", subs).Err()
+	nc().HSet(ctx, v.ChannelId, "subs", fmt.Sprintf("%d", subsInt)).Err()
 
 	expireTime := time.Now().Add(time.Hour * 24 * 30 * 12 * 2)
 	//nc().ExpireAt(ctx, v.Id, expireTime)

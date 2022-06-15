@@ -47,10 +47,24 @@ func QueryYoutubeUpdateRedis(w redis.World) {
 					//fmt.Println(stat.Id, stat.Statistics.ViewCount)
 				}
 			}*/
+		channelStats := map[string]redis.Channel{}
+		cidsFound := []string{}
+		for cid, _ := range cmap {
+			m := redis.QueryAttributes(cid)
+			if m["subs"] != "" {
+				c := redis.Channel{}
+				c.SubscriberCount = m["subs"]
+				channelStats[cid] = c
+				cidsFound = append(cidsFound, cid)
+			}
+		}
+		for _, cid := range cidsFound {
+			delete(cmap, cid)
+		}
+
 		json = network.GetChannels(cmap)
 		//ioutil.WriteFile("fname.txt", []byte(json), 0644)
 		channels := parse.ParseChannelJson(json)
-		channelStats := map[string]redis.Channel{}
 		for _, item := range channels.Items {
 			c := redis.Channel{}
 			c.ViewCount = item.Statistics.ViewCount
