@@ -16,6 +16,7 @@ func QueryIndex(c *gin.Context) {
 	offset := c.DefaultQuery("offset", "0")
 	offsetInt, _ := strconv.Atoi(offset)
 	slug := c.Param("world")
+	BumpStats(slug, c.ClientIP())
 	body := template.HTML(makeQueryHTML(slug, offsetInt))
 
 	c.HTML(http.StatusOK, "index.tmpl", gin.H{

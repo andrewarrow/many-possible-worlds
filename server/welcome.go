@@ -12,6 +12,7 @@ import (
 
 func WelcomeIndex(c *gin.Context) {
 
+	BumpStats("root", c.ClientIP())
 	body := template.HTML(makeWelcomeHTML())
 
 	email, _ := c.Cookie("email")
