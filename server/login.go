@@ -2,30 +2,35 @@ package server
 
 import (
 	"fmt"
-	"many-pw/redis"
 	"math/rand"
 	"net/http"
-	"os"
 
 	"github.com/gin-gonic/gin"
 )
 
 func LoginIndex(c *gin.Context) {
 
+	flash, _ := c.Cookie("flash")
+	c.SetCookie("flash", "", 3600, "/", "", false, true)
+
 	c.HTML(http.StatusOK, "login.tmpl", gin.H{
-		"flash": "",
+		"flash": flash,
 	})
 }
 
 func LoginSubmit(c *gin.Context) {
-	password := c.PostForm("password")
-	if password == os.Getenv("MANY_PW_PASSWORD") {
-		uuid := pseudoUuid()
-		redis.SetAuth(uuid)
-		c.SetCookie("auth", uuid, 3600*24*365*10, "/", "", false, true)
+	/*
+		password := c.PostForm("password")
+		if password == os.Getenv("MANY_PW_PASSWORD") {
+			uuid := pseudoUuid()
+			redis.SetAuth(uuid)
+			c.SetCookie("auth", uuid, 3600*24*365*10, "/", "", false, true)
+		}*/
+	cookies := c.PostForm("cookies")
+	if cookies != "1" {
+		FlashAndReturnLogin(c, "You must agree to cookies")
+		return
 	}
-	c.Redirect(http.StatusFound, "/")
-	c.Abort()
 }
 
 func pseudoUuid() string {
