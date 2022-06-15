@@ -28,7 +28,7 @@
     <div>&nbsp;</div>
 
     <div class="row mb-12">
-      <div class="col-12 themed-grid-col2">
+      <div class="col-12">
               <p>
               We also call the <a href="https://developers.google.com/youtube/v3/docs/channels/list">channels</a> 
               API to get the SubscriberCount for each channel that came back in the search results. 
@@ -41,5 +41,94 @@
               </p>
       </div>
     </div>
+
+    <div class="row mb-12">
+      <div class="col-12 themed-grid-col">
+              <p>
+              If you puruse a list of sorted channels for <a href="/w/meditation">a particular search phrase</a> you'll be looking at very fresh uploads.
+              </p>
+              <p>
+              That's the meditation world but there are many other worlds
+              (we call each one a "world") like <a href="/w/law-of-attraction">Law of Attraction</a> 
+              or <a href="/w/non-duality">Non-Duality</a>.
+              </p>
+              <p>
+              The fresh list is a rolling 24-hours of the channels with recent uploads and 
+              less than 2001 subscribers.
+              </p>
+              <p>
+              All the available worlds are listed on the <a href="/">homepage</a>.
+              </p>
+              <p>
+              You can register as a mod and create your own worlds!
+              </p>
+      </div>
+    </div>
+
+    <div>&nbsp;</div>
+
+    <div class="row mb-12">
+      <div class="col-12">
+              <p>
+              If you get to know your world and <strong>come back to it throughout the day</strong>, you'll notice new channel names.
+              </p>
+      </div>
+    </div>
+
+    <div class="row mb-12">
+      <div class="col-12 themed-grid-col">
+        <p>
+          You can either just click around the fresh list as a normal user or be a mod.
+        </p>
+        <p>
+          A mod can promote favorites to the pinned list.
+        </p>
+      </div>
+    </div>
+
+    <div>&nbsp;</div>
+
+    <h1>Technology</h1>
+
+    <div class="row mb-12">
+      <div class="col-12">
+        <p>
+        We use <a href="https://go.dev/">golang</a> and <a href="https://github.com/gin-gonic/gin">gin</a> with 
+        <a href="https://pkg.go.dev/html/template">golang html templates</a> and <a href="https://github.com/go-redis/redis/">go-redis</a> to insert and query redis.
+        </p>
+        <p>
+        </p>
+      </div>
+    </div>
+
+    <div>&nbsp;</div>
+
+    <div class="row mb-12">
+      <div class="col-12 themed-grid-col">
+        <p>
+        The 24-hour rolling list is done with another redis sorted set using the PublishedAt timestamp
+        as the score.
+        </p>
+
+        <pre>
+          ts := time.Now().Unix() - 86400
+          zrb := redis.ZRangeBy{ Min: "0", Max: fmt.Sprintf("%d", ts) }
+          vals, _ := nc().ZRangeByScore(ctx, pubzset, &zrb).Result()
+
+          for _, member := range vals {
+            nc().ZRem(ctx, subzset, member).Err()
+            nc().ZRem(ctx, pubzset, member).Err()
+          }
+        </pre>
+
+        <p>
+        So everytime you insert, you check the list for ones older than 24-hours and delete them.
+        </p>
+        <p>
+        Now - 86400 == yesterday.
+        </p>
+      </div>
+    </div>
+
 
 {{template "_footer" .}}
