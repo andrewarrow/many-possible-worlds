@@ -28,7 +28,7 @@ func QueryIndex(c *gin.Context) {
 
 func makeQueryHTML(slug string, offset int) string {
 	buffer := []string{}
-	items := redis.QueryChannelsInSlug(slug, 0)
+	items := redis.QueryChannelsInSlug(slug, offset)
 	pinned := redis.QueryPinned(slug)
 	buffer = append(buffer, "<div class=\"good-links\">")
 
@@ -55,6 +55,9 @@ func makeQueryHTML(slug string, offset int) string {
 		buffer = append(buffer, "</div>")
 		buffer = append(buffer, "</div>")
 	}
+	buffer = append(buffer, "</div>")
+	buffer = append(buffer, "<div>")
+	buffer = append(buffer, fmt.Sprintf("<a href=\"?offset=%d\">Load Next 50</a>", offset+50))
 	buffer = append(buffer, "</div>")
 	return strings.Join(buffer, "\n")
 }

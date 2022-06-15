@@ -33,7 +33,7 @@ func QueryChannelsInSlug(slug string, offset int) []Channel {
 	list := []Channel{}
 
 	subzset := fmt.Sprintf("%s-s", slug)
-	vals, _ := nc().ZRevRangeWithScores(ctx, subzset, int64(0), int64(50)).Result()
+	vals, _ := nc().ZRevRangeWithScores(ctx, subzset, int64(offset), int64(offset+50)).Result()
 	for _, item := range vals {
 		c := Channel{}
 		c.Id = item.Member.(string)
