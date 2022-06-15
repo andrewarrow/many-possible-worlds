@@ -2,6 +2,7 @@ package server
 
 import (
 	"fmt"
+	"many-pw/redis"
 	"math/rand"
 	"net/http"
 
@@ -19,18 +20,26 @@ func LoginIndex(c *gin.Context) {
 }
 
 func LoginSubmit(c *gin.Context) {
-	/*
-		password := c.PostForm("password")
-		if password == os.Getenv("MANY_PW_PASSWORD") {
-			uuid := pseudoUuid()
-			redis.SetAuth(uuid)
-			c.SetCookie("auth", uuid, 3600*24*365*10, "/", "", false, true)
-		}*/
 	cookies := c.PostForm("cookies")
 	if cookies != "1" {
 		FlashAndReturnLogin(c, "You must agree to cookies")
 		return
 	}
+	password := c.PostForm("password")
+	email := c.PostForm("email")
+
+	existing := redis.LookupEmail(email)
+	if existing != password {
+		FlashAndReturnLogin(c, "Not a valid login.")
+		return
+	}
+
+	c.SetCookie("email", email, 3600*24*365*10, "/", "", false, true)
+	c.SetCookie("password", password, 3600*24*365*10, "/", "", false, true)
+
+	c.Redirect(http.StatusFound, "/")
+	c.Abort()
+
 }
 
 func pseudoUuid() string {
