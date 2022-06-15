@@ -1,7 +1,5 @@
 {{template "_header" .}}
 
-<body class="py-4">
-    
 <main>
   <div class="container">
 
@@ -18,8 +16,29 @@
               <p>
         <input type="input" name="password" placeholder="password"/>
               </p>
+          <p>
+            <input type="checkbox" id="cookies" name="cookies" value="1">
+            <label for="cookies">I agree to cookie use.</label>
+          </p>
               <p>
         <input type="submit" value="Login"/>
+              </p>
+      </form>
+    </div>
+    
+    <div>&nbsp;</div>
+
+    <div>
+      <form method="POST" action="/register">
+              <p>
+        <input type="input" name="email" placeholder="email"/>
+              </p>
+          <p>
+            <input type="checkbox" id="cookies" name="cookies" value="1">
+            <label for="cookies">I agree to cookie use.</label>
+          </p>
+              <p>
+        <input type="submit" value="Create Account"/>
               </p>
       </form>
     </div>
