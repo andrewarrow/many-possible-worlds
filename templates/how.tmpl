@@ -16,6 +16,30 @@
     There are many possible worlds out there and many.pw tries to surface them.
     </p>
 
+    <div class="row mb-12">
+      <div class="col-12 themed-grid-col">
+              <p>We are a youtube (for now, other sites in the future) content finder.</p>
+              <p>
+              Mods create various search phrases, sometimes just one word but can be multiple words, and we call <a href="https://developers.google.com/youtube/v3/docs/search/list">Google's API for search</a> with that query once an hour.
+              </p>
+      </div>
+    </div>
 
+    <div>&nbsp;</div>
+
+    <div class="row mb-12">
+      <div class="col-12 themed-grid-col2">
+              <p>
+              We also call the <a href="https://developers.google.com/youtube/v3/docs/channels/list">channels</a> 
+              API to get the SubscriberCount for each channel that came back in the search results. 
+              </p>
+              <p>
+              We need this number to sort the list by number of subscribers. 
+              </p>
+
+              <p>Each channel is added to <a href="https://redis.io/">redis</a> in a <a href="https://redis.io/commands/zadd/">sorted set</a> with that SubscriberCount as the score to sort by.
+              </p>
+      </div>
+    </div>
 
 {{template "_footer" .}}
