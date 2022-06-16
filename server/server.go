@@ -31,6 +31,10 @@ func Serve(port string) {
 	router.POST("/logout", LogoutSubmit)
 	router.POST("/register", RegisterSubmit)
 	router.POST("/add-world", AddWorldSubmit)
+	// TODO add way to submit specific videos like
+	// https://www.youtube.com/watch?v=kFBFFOGwJ5w
+	// The Key to Graduating 3rd Density (Law of One) ft. Kyle Cease
+	// Both ACIM and the Law of one say that the 1-way ticket to salvation from this realm is forgiveness of everything. But what does forgiveness really mean? This is how most people see forgiveness wrongly, as an act of victimization instead of the ultimate act of self-empowerment and self-love that it is.
 	router.NoRoute(NotFoundIndex)
 
 	AddTemplates(router)
