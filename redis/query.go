@@ -32,14 +32,15 @@ func QueryPinned(slug string) []Channel {
 func QueryChannelsInSlug(slug string, offset int) []Channel {
 	list := []Channel{}
 
-	subzset := fmt.Sprintf("%s-s", slug)
-	vals, _ := nc().ZRevRangeWithScores(ctx, subzset, int64(offset), int64(offset+50)).Result()
+	pubzset := fmt.Sprintf("%s-p", slug)
+	vals, _ := nc().ZRevRangeWithScores(ctx, pubzset, int64(offset), int64(offset+50)).Result()
 	for _, item := range vals {
 		c := Channel{}
 		c.Id = item.Member.(string)
 		m := QueryAttributes(c.Id)
 		c.Title = m["title"]
-		c.SubscriberCount = fmt.Sprintf("%d", int64(item.Score))
+		c.SubscriberCount = m["subs"]
+		c.PublishedAt = int64(item.Score)
 		list = append(list, c)
 	}
 
