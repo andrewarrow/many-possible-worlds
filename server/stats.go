@@ -30,8 +30,8 @@ func BumpStats(route string, c *gin.Context) {
 		ref := refs[0]
 		mReferers[ref]++
 	}
-	mIps[ip]++
-	mRoutes[route]++
+	//mIps[ip]++
+	//mRoutes[route]++
 }
 
 func StatsIndex(c *gin.Context) {
@@ -60,15 +60,16 @@ func makeStatsHTML() string {
 		buffer = append(buffer, fmt.Sprintf("%s<br/>%d", k, v))
 		buffer = append(buffer, "</div>")
 	}
-	for k, v := range mRoutes {
-		buffer = append(buffer, "<div>")
-		buffer = append(buffer, fmt.Sprintf("%s<br/>%d", k, v))
-		buffer = append(buffer, "</div>")
-	}
-	for k, v := range mIps {
-		buffer = append(buffer, "<div>")
-		buffer = append(buffer, fmt.Sprintf("%s<br/>%d", k, v))
-		buffer = append(buffer, "</div>")
-	}
+	/*
+		for k, v := range mRoutes {
+			buffer = append(buffer, "<div>")
+			buffer = append(buffer, fmt.Sprintf("%s<br/>%d", k, v))
+			buffer = append(buffer, "</div>")
+		}
+		for k, v := range mIps {
+			buffer = append(buffer, "<div>")
+			buffer = append(buffer, fmt.Sprintf("%s<br/>%d", k, v))
+			buffer = append(buffer, "</div>")
+		}*/
 	return strings.Join(buffer, "\n")
 }
