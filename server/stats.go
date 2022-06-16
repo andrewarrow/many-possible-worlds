@@ -6,12 +6,15 @@ import (
 	"net/http"
 	"os"
 	"strings"
-	"time"
+	"sync"
 
 	"github.com/gin-gonic/gin"
 )
 
-var stats = []string{}
+var mReferers = map[string]int{}
+var mIps = map[string]int{}
+var mRoutes = map[string]int{}
+var mutex sync.Mutex
 
 func BumpStats(route string, c *gin.Context) {
 	ip := c.ClientIP()
@@ -19,15 +22,16 @@ func BumpStats(route string, c *gin.Context) {
 		return
 	}
 	refs := c.Request.Header["Referer"]
-	ref := ""
+
+	mutex.Lock()
+	defer mutex.Unlock()
+
 	if len(refs) > 0 {
-		ref = refs[0]
+		ref := refs[0]
+		mReferers[ref]++
 	}
-	if len(stats) > 1000 {
-		stats = []string{}
-	}
-	payload := fmt.Sprintf("%d/%s/%s/%s", time.Now().Unix(), ip, route, ref)
-	stats = append([]string{payload}, stats...)
+	mIps[ip]++
+	mRoutes[route]++
 }
 
 func StatsIndex(c *gin.Context) {
@@ -49,9 +53,21 @@ func StatsIndex(c *gin.Context) {
 
 func makeStatsHTML() string {
 	buffer := []string{}
-	for _, item := range stats {
+	mutex.Lock()
+	defer mutex.Unlock()
+	for k, v := range mReferers {
 		buffer = append(buffer, "<div>")
-		buffer = append(buffer, item)
+		buffer = append(buffer, fmt.Sprintf("%s<br/>%d", k, v))
+		buffer = append(buffer, "</div>")
+	}
+	for k, v := range mRoutes {
+		buffer = append(buffer, "<div>")
+		buffer = append(buffer, fmt.Sprintf("%s<br/>%d", k, v))
+		buffer = append(buffer, "</div>")
+	}
+	for k, v := range mIps {
+		buffer = append(buffer, "<div>")
+		buffer = append(buffer, fmt.Sprintf("%s<br/>%d", k, v))
 		buffer = append(buffer, "</div>")
 	}
 	return strings.Join(buffer, "\n")
