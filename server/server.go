@@ -12,8 +12,7 @@ import (
 func Serve(port string) {
 	router := gin.Default()
 
-	prefix := ""
-	router.Static("/assets", prefix+"assets")
+	router.Static("/assets", "assets")
 	router.GET("/", WelcomeIndex)
 	router.GET("/login", LoginIndex)
 	router.GET("/how-it-works", HowIndex)
@@ -34,7 +33,7 @@ func Serve(port string) {
 	router.POST("/add-world", AddWorldSubmit)
 	router.NoRoute(NotFoundIndex)
 
-	AddTemplates(router, prefix)
+	AddTemplates(router)
 	go router.Run(fmt.Sprintf(":%s", port))
 
 	for {
@@ -43,12 +42,12 @@ func Serve(port string) {
 
 }
 
-func AddTemplates(r *gin.Engine, prefix string) {
+func AddTemplates(r *gin.Engine) {
 	fm := template.FuncMap{
 		"mod":    func(i, j int) bool { return i%j == 0 },
 		"tokens": func(s string, i int) string { return strings.Split(s, ".")[i] },
 		"add":    func(i, j int) int { return i + j },
 	}
 	r.SetFuncMap(fm)
-	r.LoadHTMLGlob(prefix + "templates/*.tmpl")
+	r.LoadHTMLGlob("templates/*.tmpl")
 }
