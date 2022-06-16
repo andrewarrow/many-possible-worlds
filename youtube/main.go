@@ -11,6 +11,7 @@ func main() {
 	//words := []string{"meditation", "spirituality", "awakening", "law of attraction", "ego", "self hypnosis", "manifestation", "zen master", "non-duality", "healing", "thoughts"}
 	//words := []string{"meditation"}
 	for _, w := range redis.QueryWorlds() {
+		fmt.Println(w)
 		QueryYoutubeUpdateRedis(w)
 	}
 }
@@ -58,10 +59,12 @@ func QueryYoutubeUpdateRedis(w redis.World) {
 				cidsFound = append(cidsFound, cid)
 			}
 		}
+		fmt.Println("  Found Cids:", len(cidsFound))
 		for _, cid := range cidsFound {
 			delete(cmap, cid)
 		}
 
+		fmt.Println("  Asking for Cids:", len(cmap))
 		json = network.GetChannels(cmap)
 		//ioutil.WriteFile("fname.txt", []byte(json), 0644)
 		channels := parse.ParseChannelJson(json)
@@ -75,8 +78,8 @@ func QueryYoutubeUpdateRedis(w redis.World) {
 
 		for _, v := range vmap {
 			c := channelStats[v.ChannelId]
-			fmt.Printf("%05s %s\n", v.ViewCount, v.Title)
-			fmt.Printf("%05s %s\n", c.SubscriberCount, v.ChannelTitle)
+			//fmt.Printf("%05s %s\n", v.ViewCount, v.Title)
+			//fmt.Printf("%05s %s\n", c.SubscriberCount, v.ChannelTitle)
 			redis.InsertItem(v, c.SubscriberCount, w.Slug)
 		}
 
