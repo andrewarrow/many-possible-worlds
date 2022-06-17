@@ -6,7 +6,7 @@ import (
 	"many-pw/network"
 )
 
-func main2() {
+func main() {
 	cid := "UCHEoWlkGf-nSVdNk9b6SR0g"
 	cmap := map[string]bool{}
 	cmap[cid] = true
