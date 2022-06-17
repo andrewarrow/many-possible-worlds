@@ -17,7 +17,7 @@ func ChannelShow(c *gin.Context) {
 	items := redis.QueryVideosInChannel(id, 0)
 
 	auth := ""
-	if ModInWorld(c) {
+	if ModInWorld(c, slug) {
 		auth = "auth"
 	}
 
@@ -31,8 +31,7 @@ func ChannelShow(c *gin.Context) {
 	})
 }
 
-func ModInWorld(c *gin.Context) bool {
-	slug := c.Param("slug")
+func ModInWorld(c *gin.Context, slug string) bool {
 	email, _ := c.Cookie("email")
 	password, _ := c.Cookie("password")
 
@@ -60,7 +59,7 @@ func ChannelIndex(c *gin.Context) {
 }
 func ChannelGem(c *gin.Context) {
 	slug := c.Param("slug")
-	if !ModInWorld(c) {
+	if !ModInWorld(c, slug) {
 		c.Redirect(http.StatusFound, "/w/"+slug)
 		c.Abort()
 		return
@@ -72,7 +71,7 @@ func ChannelGem(c *gin.Context) {
 }
 func ChannelUnGem(c *gin.Context) {
 	slug := c.Param("slug")
-	if !ModInWorld(c) {
+	if !ModInWorld(c, slug) {
 		c.Redirect(http.StatusFound, "/w/"+slug)
 		c.Abort()
 		return

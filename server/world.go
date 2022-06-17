@@ -23,6 +23,7 @@ func WorldIndex(c *gin.Context) {
 		"flash":  "",
 		"offset": offsetInt + 50,
 		"pinned": pinned,
+		"slug":   slug,
 		"fresh":  fresh,
 		"world":  slug,
 	})

@@ -16,20 +16,24 @@
       <p>
       <a href="https://www.youtube.com/watch?v={{$v.Id}}">view on youtube</a>
       </p>
-      {{ if ne $.auth "" }}
-        <p>
-          <form method="POST" action="/c/{{$.slug}}/{{$.id}}/gem">
-            <input type="submit" value="Mark this channel as a GEM in this world!"/>
-          </form>
-        </p>
-        <p>
-          <form method="POST" action="/c/{{$.slug}}/{{$.id}}/ungem">
-            <input type="submit" value="Un-Mark this channel as a GEM in this world!"/>
-          </form>
-        </p>
-      {{ end }}
     </p>
 </div>
     {{ end }}
+
+<div class="entry-content">
+      {{ if ne $.auth "" }}
+          <form method="POST" action="/c/{{$.slug}}/{{$.id}}/gem">
+        <p>
+            <input type="submit" value="Mark this channel as a GEM in this world!"/>
+        </p>
+          </form>
+          <form method="POST" action="/c/{{$.slug}}/{{$.id}}/ungem">
+        <p>
+            <input type="submit" value="Un-Mark this channel as a GEM in this world!"/>
+        </p>
+          </form>
+      {{ end }}
+
+</div>
 
 {{template "_footer" .}}

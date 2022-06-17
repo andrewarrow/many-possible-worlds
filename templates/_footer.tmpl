@@ -9,38 +9,14 @@
 <li>
 <h3>Contact</h3>
 <p>
-          © Andrew Arrow<br/>
-        oneone [at] gmail</p>
-<p>+1 424-210-7829</p>
+© Andrew Arrow<br/>
+oneone [at] gmail<br/>
++1 424-210-7829
+</p>
 </li>
-</ul>
-</div>
-</footer>
-</main>
-
-
-
-<!--
-  </p>
-
-  <div class="container-fluid themed-container">
-                  +1 (424) 210-7829
-                  <br/>
-                  &copy; 2022 many.pw
-                  <br/>
-                  oneone at gmail
-  </div>
-  <div>
-          <a href="/login">Login</a>
-  </div>
-  <div>
-          <a href="/how-it-works">How It Works</a>
-  </div>
-
-
-<div>
         {{if ne .email ""}}
-        <br/>
+        <li>
+        <p>
         you are logged in as {{.email}}
         <br/>
         <a href="#" onclick="event.preventDefault(); logOut();">Log Out</a>
@@ -50,15 +26,14 @@
           document.getElementById("out").submit();
         }
         </script>
+        </p>
+        </li>
         {{end}}
+</ul>
 </div>
-
-
+</footer>
 </main>
 
-
-    
-  </body>
+</body>
 </html>
--->
 {{end}}
