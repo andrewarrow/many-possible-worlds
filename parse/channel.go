@@ -16,12 +16,13 @@ type ChannelItem struct {
 }
 
 type ChannelSnippet struct {
-	Title       string     `json:"title"`
-	Description string     `json:"description"`
-	PublishedAt time.Time  `json:publishedAt"`
-	Thumbnails  Thumbnails `json:"thumbnails"`
-	CustomUrl   string     `json:"customUrl"`
-	Country     string     `json:"country"`
+	Title           string     `json:"title"`
+	Description     string     `json:"description"`
+	DefaultLanguage string     `json:"defaultLanguage"`
+	PublishedAt     time.Time  `json:publishedAt"`
+	Thumbnails      Thumbnails `json:"thumbnails"`
+	CustomUrl       string     `json:"customUrl"`
+	Country         string     `json:"country"`
 }
 
 type ChannelStatistics struct {

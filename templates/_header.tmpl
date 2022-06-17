@@ -19,7 +19,6 @@
     </style>
   </head>
 <body class="low">
-    {{template "_flash" .}}
 <main>
         <header class="top">
         <h1><a href="/">Many Possible Worlds!</a></h1>
@@ -31,6 +30,7 @@
         <ul id="menu-list">
         <li><a href="/">Home</a></li>
         <li class="low"><a class="category" href="/how-it-works">How It Works</a></li>
+        <li class="low"><a class="category" href="/survey">Take Survey</a></li>
         <li class="low"><a class="category" href="/login">Login</a></li>
         </ul>
         </nav>
@@ -39,6 +39,8 @@
                * 
         </div>
         </header>
+
+{{template "_flash" .}}
 
 <section class="article" id="content">
 <header>

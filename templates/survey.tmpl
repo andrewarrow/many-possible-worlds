@@ -1,0 +1,27 @@
+{{template "_header" .}}
+<h2 class="entry-title">Spiritual Survey</h2>
+<div class="entry-content">
+
+    <p>
+Welcome to our 2022 Spiritual Survey! We want to know where you fit into the many worlds community by asking you a
+series of questions. It won't take long and we save your progress as you go. To get started tell us your
+youtube channel name and are you okay with cookies?
+    </p>
+
+    <p>
+      <form method="POST" action="/survey-1">
+              <p>
+        <input type="text" name="channel" placeholder="youtube channel name"/>
+              </p>
+          <p>
+            <input type="checkbox" id="cookies1" name="cookies" value="1">
+            <label for="cookies1">I agree to cookie use.</label>
+          </p>
+              <p>
+        <input type="submit" value="Next Question"/>
+              </p>
+      </form>
+    </p>
+</div>
+    
+{{template "_footer" .}}
