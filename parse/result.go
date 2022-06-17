@@ -35,7 +35,7 @@ type Snippet struct {
 
 type Thumbnails struct {
 	Default Thumbnail `json:"default"`
-	Medium  Thumbnail `json:"default"`
+	Medium  Thumbnail `json:"medium"`
 }
 
 type Thumbnail struct {

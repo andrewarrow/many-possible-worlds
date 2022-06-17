@@ -11,15 +11,28 @@
 {{ end }}
 
 <h2>Fresh</h2>
-{{ range $f := .fresh }}
-  <div class="entry-content">
-    <p>
-    <a href="/c/{{$.slug}}/{{$f.Id}}">{{$f.Title}}</a> with {{$f.SubscriberCount}} sub(s)
-    <br/>
+<div class="featured">
+    {{ range $f := .fresh }}
+        <ul class="cols">
+        <li>
+                <p><a href="/"><img border="1" width="176" height="176" src="{{$f.ImageUrl}}"/></a></p>
+        </li>
+        <li>
+           <p>
+                <a href="/c/{{$.slug}}/{{$f.Id}}">{{$f.Title}}</a>
+           </p>
+        </li>
+        <li>
+           <p>
     {{ deltaAgo $f.PublishedAt}} ago
-    </p>
-  </div>
-{{ end }}
+           </p>
+        </li>
+        <li>
+                <p> {{$f.SubscriberCount}} subscriber(s).  </p>
+        </li>
+        </ul>
+    {{ end }}
+</div>
 
 <h2>Next</h2>
   <div class="entry-content">

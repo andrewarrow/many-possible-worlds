@@ -40,6 +40,7 @@ func QueryChannelsInSlug(slug string, offset int) []Channel {
 		m := QueryAttributes(c.Id)
 		c.Title = m["title"]
 		c.SubscriberCount = m["subs"]
+		c.ImageUrl = m["img"]
 		c.PublishedAt = int64(item.Score)
 		list = append(list, c)
 	}
