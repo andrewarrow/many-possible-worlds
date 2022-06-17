@@ -41,7 +41,7 @@ func makeQueryHTML(slug string, offset int) string {
 
 	buffer = append(buffer, "<h2>Latest</h2>")
 	t := `
-<a href=\"/c/%s/%s\">%s</a> with %s sub(s)<br/>%s ago
+<a href="/c/%s/%s">%s</a> with %s sub(s)<br/>%s ago
 `
 	for _, item := range items {
 		buffer = append(buffer, "<p>")
