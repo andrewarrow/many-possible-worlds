@@ -5,7 +5,7 @@
 {{ range $p := .pinned }}
   <div class="entry-content">
     <p>
-    pinned
+    <a href="/c/{{$.slug}}/{{$p.Id}}">{{$p.Title}}</a>
     </p>
   </div>
 {{ end }}
@@ -14,9 +14,19 @@
 {{ range $f := .fresh }}
   <div class="entry-content">
     <p>
-    fresh
+    <a href="/c/{{$.slug}}/{{$f.Id}}">{{$f.Title}}</a> with {{$f.SubscriberCount}} sub(s)
+    <br/>
+    {{ deltaAgo $f.PublishedAt}} ago
     </p>
   </div>
 {{ end }}
+
+<h2>Next</h2>
+  <div class="entry-content">
+<p>
+<a href="?offset={{$.offset}}">Load Next 50</a>
+</p>
+  </div>
+
 
 {{template "_footer" .}}

@@ -48,9 +48,10 @@ func Serve(port string) {
 
 func AddTemplates(r *gin.Engine) {
 	fm := template.FuncMap{
-		"mod":    func(i, j int) bool { return i%j == 0 },
-		"tokens": func(s string, i int) string { return strings.Split(s, ".")[i] },
-		"add":    func(i, j int) int { return i + j },
+		"mod":      func(i, j int) bool { return i%j == 0 },
+		"tokens":   func(s string, i int) string { return strings.Split(s, ".")[i] },
+		"deltaAgo": func(i int64) string { return DeltaAgo(i) },
+		"add":      func(i, j int) int { return i + j },
 	}
 	r.SetFuncMap(fm)
 	r.LoadHTMLGlob("templates/*.tmpl")
