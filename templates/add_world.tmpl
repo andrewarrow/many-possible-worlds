@@ -1,14 +1,8 @@
 {{template "_header" .}}
+<h2 class="entry-title">Add World</h2>
+<div class="entry-content">
 
-<main>
-  <div class="container">
-
-    <div class="good-links">
-      <h1><a href="/">many.pw</a></h1>
-    </div>
-    <p class="lead">Many Possible Worlds!</p>
-
-    <div>
+    <p>
       <form method="POST" action="/add-world">
               <p>
         <input type="text" name="q" placeholder="search phrase"/>
@@ -17,6 +11,7 @@
         <input type="submit" value="Add World"/>
               </p>
       </form>
-    </div>
+    </p>
+</div>
 
 {{template "_footer" .}}

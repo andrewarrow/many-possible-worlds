@@ -1,18 +1,15 @@
 {{template "_header" .}}
+<h2 class="entry-title">Channel</h2>
+<div class="entry-content">
 
-<main>
-  <div class="container">
-
-    <div class="good-links">
-      <h1><a href="/">many.pw</a></h1>
-    </div>
-    <p class="lead">Many Possible Worlds!</p>
+    <p>
 
     <a href="https://www.youtube.com/channel/{{.id}}/about">about</a>
 
+    </p>
 
     {{ range $v := .items }}
-    <div>
+    <p>
       <iframe width="560" height="315" src="https://www.youtube.com/embed/{{$v.Id}}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
       <p>
       <a href="https://www.youtube.com/watch?v={{$v.Id}}">view on youtube</a>
@@ -31,7 +28,8 @@
         </div>
         <div>&nbsp;</div>
       {{ end }}
-    </div>
+    </p>
     {{ end }}
 
+</div>
 {{template "_footer" .}}
