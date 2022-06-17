@@ -1,0 +1,22 @@
+{{template "_header" .}}
+<h1 class="entry-title">{{ .world }}</h1>
+
+<h2>Pinned</h2>
+{{ range $p := .pinned }}
+  <div class="entry-content">
+    <p>
+    pinned
+    </p>
+  </div>
+{{ end }}
+
+<h2>Fresh</h2>
+{{ range $f := .fresh }}
+  <div class="entry-content">
+    <p>
+    fresh
+    </p>
+  </div>
+{{ end }}
+
+{{template "_footer" .}}

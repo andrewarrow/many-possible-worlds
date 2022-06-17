@@ -2,7 +2,6 @@ package server
 
 import (
 	"fmt"
-	"html/template"
 	"many-pw/redis"
 	"net/http"
 	"strconv"
@@ -11,18 +10,22 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func QueryIndex(c *gin.Context) {
+func WorldIndex(c *gin.Context) {
 
 	offset := c.DefaultQuery("offset", "0")
 	offsetInt, _ := strconv.Atoi(offset)
 	slug := c.Param("world")
 	BumpStats(slug, c)
-	body := template.HTML(makeQueryHTML(slug, offsetInt))
 
-	c.HTML(http.StatusOK, "index.tmpl", gin.H{
-		"email": "",
-		"flash": "",
-		"body":  body,
+	fresh := redis.QueryChannelsInSlug(slug, offsetInt)
+	pinned := redis.QueryPinned(slug)
+
+	c.HTML(http.StatusOK, "world.tmpl", gin.H{
+		"email":  "",
+		"flash":  "",
+		"pinned": pinned,
+		"fresh":  fresh,
+		"world":  slug,
 	})
 }
 
