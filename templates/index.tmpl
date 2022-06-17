@@ -1,7 +1,7 @@
 {{template "_header" .}}
 <h1 class="entry-title">Our Favorites</h1>
 
-<div id="featured">
+<div class="featured">
         <ul class="cols">
         <li>
             <p><a href="https://www.youtube.com/c/satyogainstitute"><img width="176" height="176" src="https://yt3.ggpht.com/ytc/AKedOLQL4fk3XNNEL1Kwz0-MV0WxtqM4H2soBwRo7XFetw=s176-c-k-c0x00ffffff-no-rj"/></a></p>
@@ -62,6 +62,7 @@
            <p>
            His <a href="https://www.youtube.com/watch?v=u-hSLm9L3wE">Pathway to the spirit world. Bandana!</a> from Oct 15, 2021 
            explains why you want to wear a "crown" all the time.
+           And remember to subsitute the word <a href="https://www.youtube.com/watch?v=5ZGysKugz94">spending to investing</a>.
            </p>
         </li>
         <li>
@@ -72,7 +73,38 @@
         </ul>
 </div>
 
-<h1 class="entry-title">Our Worlds</h1>
+<h1 class="entry-title">Latest Additions</h1>
+
+<div class="featured">
+    {{ range $l := .latest }}
+        <ul class="cols">
+        <li>
+                <p><a href="{{$l.ChannelUrl}}"><img width="176" height="176" src="{{$l.Image}}"/></a></p>
+        </li>
+        <li>
+           <p>
+           {{$l.About}}
+           </p>
+        </li>
+        <li>
+           <p>
+           She published
+  <a href="https://www.youtube.com/watch?v={{$l.ExampleVideoId}}">{{ $l.ExampleVideoTitle}}</a>  
+  <br/>
+  {{ deltaAgo $l.ExampleVideoPublishedAt}} ago
+
+           </p>
+        </li>
+        <li>
+                <p> {{$l.SubscriberCount}} subscriber(s).  </p>
+                <p> {{$l.ViewCount}} total channel view(s).  </p>
+                <p> {{$l.VideoCount}} total channel video(s).  </p>
+        </li>
+        </ul>
+    {{ end }}
+</div>
+
+<h1 class="entry-title">Explore Worlds</h1>
 {{ range $w := .worlds }}
 <div class="entry-content">
     <p>

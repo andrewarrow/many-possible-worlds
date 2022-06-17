@@ -20,10 +20,13 @@ func WelcomeIndex(c *gin.Context) {
 		loggedInAs = email
 	}
 	worlds := redis.QueryWorlds()
+	latest := redis.QueryLatest()
 
 	c.HTML(http.StatusOK, "index.tmpl", gin.H{
 		"flash":  "",
 		"email":  loggedInAs,
 		"worlds": worlds,
+		"latest": latest,
 	})
+
 }
