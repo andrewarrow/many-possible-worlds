@@ -1,35 +1,35 @@
 {{template "_header" .}}
 <h2 class="entry-title">Channel</h2>
+
 <div class="entry-content">
 
     <p>
-
     <a href="https://www.youtube.com/channel/{{.id}}/about">about</a>
-
     </p>
 
+    </div>
+
     {{ range $v := .items }}
+<div class="entry-content">
     <p>
       <iframe width="560" height="315" src="https://www.youtube.com/embed/{{$v.Id}}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
       <p>
       <a href="https://www.youtube.com/watch?v={{$v.Id}}">view on youtube</a>
       </p>
       {{ if ne $.auth "" }}
-        <div>
+        <p>
           <form method="POST" action="/c/{{$.slug}}/{{$.id}}/gem">
             <input type="submit" value="Mark this channel as a GEM in this world!"/>
           </form>
-        </div>
-        <div>&nbsp;</div>
-        <div>
+        </p>
+        <p>
           <form method="POST" action="/c/{{$.slug}}/{{$.id}}/ungem">
             <input type="submit" value="Un-Mark this channel as a GEM in this world!"/>
           </form>
-        </div>
-        <div>&nbsp;</div>
+        </p>
       {{ end }}
     </p>
+</div>
     {{ end }}
 
-</div>
 {{template "_footer" .}}
