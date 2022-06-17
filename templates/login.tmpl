@@ -1,14 +1,8 @@
 {{template "_header" .}}
+<h2 class="entry-title">Login</h2>
+<div class="entry-content">
 
-<main>
-  <div class="container">
-
-    <div class="good-links">
-      <h1><a href="/">many.pw</a></h1>
-    </div>
-    <p class="lead">Many Possible Worlds!</p>
-
-    <div>
+    <p>
       <form method="POST" action="/login">
               <p>
         <input type="text" name="email" placeholder="email"/>
@@ -24,11 +18,12 @@
         <input type="submit" value="Login"/>
               </p>
       </form>
-    </div>
+    </p>
+</div>
     
-    <div>&nbsp;</div>
-
-    <div>
+<h2 class="entry-title">Register</h2>
+<div class="entry-content">
+    <p>
       <form method="POST" action="/register">
               <p>
         <input type="text" name="email" placeholder="email"/>
@@ -41,7 +36,8 @@
         <input type="submit" value="Create Account"/>
               </p>
       </form>
-    </div>
+    </p>
 
 
+</div>
 {{template "_footer" .}}
