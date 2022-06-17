@@ -1,6 +1,9 @@
 package parse
 
-import "encoding/json"
+import (
+	"encoding/json"
+	"time"
+)
 
 type ChannelItems struct {
 	Items []ChannelItem `json:"items"`
@@ -9,6 +12,16 @@ type ChannelItems struct {
 type ChannelItem struct {
 	Id         string            `json:"id"`
 	Statistics ChannelStatistics `json:"statistics"`
+	Snippet    ChannelSnippet    `json:""snippet`
+}
+
+type ChannelSnippet struct {
+	Title       string     `json:"title"`
+	Description string     `json:"description"`
+	PublishedAt time.Time  `json:publishedAt"`
+	Thumbnails  Thumbnails `json:"thumbnails"`
+	CustomUrl   string     `json:"customUrl"`
+	Country     string     `json:"country"`
 }
 
 type ChannelStatistics struct {

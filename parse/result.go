@@ -34,10 +34,11 @@ type Snippet struct {
 }
 
 type Thumbnails struct {
-	Default Default `json:"default"`
+	Default Thumbnail `json:"default"`
+	Medium  Thumbnail `json:"default"`
 }
 
-type Default struct {
+type Thumbnail struct {
 	Url    string `json:"url"`
 	Width  int    `json:"width"`
 	Height int    `json:"height"`

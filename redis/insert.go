@@ -14,9 +14,9 @@ func init() {
 	utc, _ = time.LoadLocation("UTC")
 }
 
-func InsertItem(v *Video, subs, slug string) {
+func InsertItem(v *Video, c *Channel, slug string) {
 
-	subsInt, _ := strconv.ParseInt(subs, 10, 64)
+	subsInt, _ := strconv.ParseInt(c.SubscriberCount, 10, 64)
 	if subsInt > 2000 || subsInt < 1 {
 		return
 	}
@@ -57,6 +57,7 @@ func InsertItem(v *Video, subs, slug string) {
 
 	nc().HSet(ctx, v.ChannelId, "title", v.ChannelTitle).Err()
 	nc().HSet(ctx, v.ChannelId, "subs", fmt.Sprintf("%d", subsInt)).Err()
+	nc().HSet(ctx, v.ChannelId, "img", c.ImageUrl).Err()
 
 	expireTime := time.Now().Add(time.Hour * 24 * 30 * 12 * 2)
 	//nc().ExpireAt(ctx, v.Id, expireTime)

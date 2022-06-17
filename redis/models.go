@@ -17,6 +17,7 @@ type Channel struct {
 	Title           string
 	Id              string
 	PublishedAt     int64
+	ImageUrl        string
 }
 
 type World struct {

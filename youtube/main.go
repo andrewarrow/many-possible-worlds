@@ -48,14 +48,15 @@ func QueryYoutubeUpdateRedis(w redis.World) {
 					//fmt.Println(stat.Id, stat.Statistics.ViewCount)
 				}
 			}*/
-		channelStats := map[string]redis.Channel{}
+		channelStats := map[string]*redis.Channel{}
 		cidsFound := []string{}
 		for cid, _ := range cmap {
 			m := redis.QueryAttributes(cid)
-			if m["subs"] != "" {
+			if m["img"] != "" {
 				c := redis.Channel{}
 				c.SubscriberCount = m["subs"]
-				channelStats[cid] = c
+				c.ImageUrl = m["img"]
+				channelStats[cid] = &c
 				cidsFound = append(cidsFound, cid)
 			}
 		}
@@ -73,14 +74,15 @@ func QueryYoutubeUpdateRedis(w redis.World) {
 			c.ViewCount = item.Statistics.ViewCount
 			c.VideoCount = item.Statistics.VideoCount
 			c.SubscriberCount = item.Statistics.SubscriberCount
-			channelStats[item.Id] = c
+			c.ImageUrl = item.Snippet.Thumbnails.Medium.Url
+			channelStats[item.Id] = &c
 		}
 
 		for _, v := range vmap {
 			c := channelStats[v.ChannelId]
 			//fmt.Printf("%05s %s\n", v.ViewCount, v.Title)
 			//fmt.Printf("%05s %s\n", c.SubscriberCount, v.ChannelTitle)
-			redis.InsertItem(v, c.SubscriberCount, w.Slug)
+			redis.InsertItem(v, c, w.Slug)
 		}
 
 	}

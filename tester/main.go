@@ -15,7 +15,7 @@ func main() {
 	fmt.Println(cid)
 }
 
-func main() {
+func main2() {
 	vids := []string{"faTNcxR0KqM"}
 	json := network.SearchVideos(vids)
 	ioutil.WriteFile("fname.txt", []byte(json), 0644)
