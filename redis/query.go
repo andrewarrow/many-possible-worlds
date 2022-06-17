@@ -22,7 +22,8 @@ func QueryPinned(slug string) []Channel {
 		c.Id = item.Member.(string)
 		m := QueryAttributes(c.Id)
 		c.Title = m["title"]
-		c.SubscriberCount = fmt.Sprintf("%d", int64(item.Score))
+		c.ImageUrl = m["img"]
+		c.SubscriberCount = m["subs"]
 		list = append(list, c)
 	}
 

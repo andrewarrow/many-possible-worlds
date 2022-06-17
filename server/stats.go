@@ -3,6 +3,9 @@ package server
 import (
 	"fmt"
 	"html/template"
+	"many-pw/network"
+	"many-pw/parse"
+	"many-pw/redis"
 	"net/http"
 	"os"
 	"strings"
@@ -40,6 +43,28 @@ func StatsIndex(c *gin.Context) {
 		c.Redirect(http.StatusFound, "/")
 		c.Abort()
 		return
+	}
+
+	cmap := map[string]bool{}
+	for _, w := range redis.QueryWorlds() {
+		fmt.Println(w)
+		fresh := redis.QueryChannelsInSlug(w.Slug, 0)
+		for _, f := range fresh {
+			if f.ImageUrl == "" {
+				cmap[f.Id] = true
+			}
+		}
+		pinned := redis.QueryPinned(w.Slug)
+		for _, f := range pinned {
+			if f.ImageUrl == "" {
+				cmap[f.Id] = true
+			}
+		}
+	}
+	json := network.GetChannels(cmap)
+	channels := parse.ParseChannelJson(json)
+	for _, item := range channels.Items {
+		redis.UpdateChannelImage(item.Id, item.Snippet.Thumbnails.Medium.Url)
 	}
 
 	body := template.HTML(makeStatsHTML())

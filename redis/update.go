@@ -23,3 +23,7 @@ func UpdateGemCount(slug, id string, val int) {
 	expireTime := time.Now().Add(time.Hour * 24 * 30 * 12 * 2)
 	nc().ExpireAt(ctx, bucket, expireTime)
 }
+
+func UpdateChannelImage(id, url string) {
+	nc().HSet(ctx, id, "img", url).Err()
+}
