@@ -44,7 +44,7 @@ func StatsIndex(c *gin.Context) {
 
 	body := template.HTML(makeStatsHTML())
 
-	c.HTML(http.StatusOK, "index.tmpl", gin.H{
+	c.HTML(http.StatusOK, "general.tmpl", gin.H{
 		"email": "",
 		"flash": "",
 		"body":  body,

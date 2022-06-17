@@ -1,10 +1,7 @@
 {{template "_header" .}}
 <h1 class="entry-title">Our Worlds</h1>
-{{ range $w := .worlds }}
 <div class="entry-content">
-    <p>
-      <a href="/w/{{$w.Slug}}">{{$w.Title}}</a>
-    </p>
+
+              {{.body}}
 </div>
-{{end}}
 {{template "_footer" .}}

@@ -12,7 +12,7 @@ func NotFoundIndex(c *gin.Context) {
 
 	body := template.HTML(make404HTML())
 
-	c.HTML(http.StatusNotFound, "index.tmpl", gin.H{
+	c.HTML(http.StatusNotFound, "general.tmpl", gin.H{
 		"flash": "",
 		"body":  body,
 	})
