@@ -13,7 +13,9 @@ func ImportVideo(id string) {
 		return
 	}
 	ioutil.WriteFile("fname.txt", []byte(json), 0644)
-	v := parse.ParseVideoJson(json)
-	fmt.Println(v)
+	vs := parse.ParseVideoJson(json)
+	v := vs.Items[0]
+
+	fmt.Println(v.Snippet.Title)
 
 }

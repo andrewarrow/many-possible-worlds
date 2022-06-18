@@ -3,12 +3,13 @@ package parse
 import "encoding/json"
 
 type VideoItems struct {
-	Items []StatItem `json:"items"`
+	Items []VideoItem `json:"items"`
 }
 
 type VideoItem struct {
 	Id         string     `json:"id"`
 	Statistics Statistics `json:"statistics"`
+	Snippet    Snippet    `json:"snippet"`
 }
 
 func ParseVideoJson(jsonString string) *VideoItems {
