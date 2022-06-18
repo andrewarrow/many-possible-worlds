@@ -1,0 +1,33 @@
+{{template "_header" .}}
+<h1 class="entry-title">Channels</h1>
+
+<div class="featured">
+    {{ range $l := .latest }}
+        <ul class="cols">
+        <li>
+                <p><a href="{{$l.ChannelUrl}}"><img border="1" width="176" height="176" src="{{$l.Image}}"/></a></p>
+        </li>
+        <li>
+           <p>
+           {{$l.About}}
+           </p>
+        </li>
+        <li>
+           <p>
+           They published
+  <a href="https://www.youtube.com/watch?v={{$l.ExampleVideoId}}">{{ $l.ExampleVideoTitle}}</a>  
+  <br/>
+  {{ deltaAgo $l.ExampleVideoPublishedAt}} ago
+
+           </p>
+        </li>
+        <li>
+                <p> {{$l.SubscriberCount}} subscriber(s).  </p>
+                <p> {{$l.ViewCount}} total channel view(s).  </p>
+                <p> {{$l.VideoCount}} total channel video(s).  </p>
+        </li>
+        </ul>
+    {{ end }}
+</div>
+
+{{template "_footer" .}}
