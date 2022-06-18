@@ -41,7 +41,7 @@ func DoHttpRead(verb, route string, client *http.Client, request *http.Request) 
 			return string(body)
 		} else {
 			fmt.Printf("\n\nERROR: %d %s\n\n", resp.StatusCode, string(body))
-			return
+			return ""
 		}
 	}
 	fmt.Printf("\n\nERROR: %s\n\n", err.Error())
