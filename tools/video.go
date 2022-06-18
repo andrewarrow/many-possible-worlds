@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"html"
 	"many-pw/network"
 	"many-pw/parse"
 	"many-pw/redis"
@@ -35,9 +36,9 @@ func ImportSingleVideo(id string) {
 
 	v := redis.Video{}
 	v.Id = id
-	v.Title = item.Snippet.Title
+	v.Title = html.UnescapeString(item.Snippet.Title)
 	v.PublishedAt = item.Snippet.PublishedAt.Unix()
-	v.ChannelTitle = item.Snippet.ChannelTitle
+	v.ChannelTitle = html.UnescapeString(item.Snippet.ChannelTitle)
 	v.ChannelId = item.Snippet.ChannelId
 	v.ImageUrl = item.Snippet.Thumbnails.Medium.Url
 
