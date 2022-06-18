@@ -21,6 +21,6 @@ func main() {
 		ImportVideo(id)
 	} else if command == "c" {
 		id := os.Args[2]
-		ImportCaptions(id)
+		ImportChannel(id)
 	}
 }

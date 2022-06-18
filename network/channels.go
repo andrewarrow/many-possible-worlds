@@ -26,3 +26,11 @@ func GetChannels(cmap map[string]bool) string {
 	json := DoGet(fmt.Sprintf("channels?maxResults=50&part=snippet,contentDetails,statistics&id=%s&key=%s", list, key))
 	return json
 }
+
+func VideosInChannel(id string) string {
+
+	key := os.Getenv("YOUTUBE_KEY")
+	url := fmt.Sprintf("search?part=snippet&order=date&maxResults=1&key=%s&channelId=%s", key, id)
+	json := DoGet(url)
+	return json
+}
