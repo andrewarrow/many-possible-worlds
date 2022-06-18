@@ -1,7 +1,6 @@
 package main
 
 import (
-	"many-pw/redis"
 	"math/rand"
 	"os"
 	"time"
@@ -23,10 +22,8 @@ func main() {
 	} else if command == "c" {
 		id := os.Args[2]
 		ImportChannel(id)
-	} else if command == "loop" {
-		latest := redis.QueryLatest("latest", 50)
-		for _, l := range latest {
-			redis.UpdateLatestVc(l)
-		}
+	} else if command == "transcript" {
+		id := os.Args[2]
+		ParseTranscript(id)
 	}
 }
