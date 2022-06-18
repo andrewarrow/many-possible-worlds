@@ -20,11 +20,11 @@ type Latest struct {
 	VideoCount              int64
 }
 
-func QueryLatest() []Latest {
+func QueryLatest(amount int) []Latest {
 	list := []Latest{}
 
 	zset := "latest"
-	vals, _ := nc().ZRevRangeWithScores(ctx, zset, int64(0), int64(50)).Result()
+	vals, _ := nc().ZRevRangeWithScores(ctx, zset, int64(0), int64(amount)).Result()
 	for _, item := range vals {
 		l := Latest{}
 		l.ChannelId = item.Member.(string)

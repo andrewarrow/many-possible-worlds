@@ -79,18 +79,17 @@
     {{ range $l := .latest }}
         <ul class="cols">
         <li>
-                <p><a href="https://www.youtube.com/channel/{{$l.ChannelId}}"><img border="1" width="176" height="176" src="{{$l.Image}}"/></a></p>
+        <p><a href="ihttps://www.youtube.com/channel/{{$l.ChannelId}}"><img border="1" width="176" height="176" src="{{$l.ImageUrl}}"/></a></p>
         </li>
         <li>
            <p>
-           Coming Soon...
+           {{$l.ChannelTitle}} 
+           published
+  <a href="https://www.youtube.com/watch?v={{$l.ExampleVideoId}}">{{ $l.ExampleVideoTitle}}</a>  
            </p>
         </li>
         <li>
            <p>
-           They published
-  <a href="https://www.youtube.com/watch?v={{$l.ExampleVideoId}}">{{ $l.ExampleVideoTitle}}</a>  
-  <br/>
   {{ deltaAgo $l.ExampleVideoPublishedAt}} ago
 
            </p>
