@@ -8,7 +8,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func ChannelShow(c *gin.Context) {
+func ChannelSlugShow(c *gin.Context) {
 
 	id := c.Param("id")
 	slug := c.Param("slug")

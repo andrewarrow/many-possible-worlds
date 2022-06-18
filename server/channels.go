@@ -22,3 +22,14 @@ func ChannelsIndex(c *gin.Context) {
 		"latest": latest,
 	})
 }
+
+func ChannelsShow(c *gin.Context) {
+
+	id := c.Param("id")
+	single := redis.LoadLatest(id)
+	c.HTML(http.StatusOK, "channels_show.tmpl", gin.H{
+		"flash": "",
+		"email": "",
+		"c":     single,
+	})
+}

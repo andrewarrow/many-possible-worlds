@@ -1,0 +1,30 @@
+{{template "_header" .}}
+<h1 class="entry-title">Channel</h1>
+
+<div class="featured">
+        <ul class="cols">
+        <li>
+        <p><a href="https://www.youtube.com/channel/{{.c.ChannelId}}"><img border="1" width="176" height="176" src="{{.c.ImageUrl}}"/></a></p>
+        </li>
+        <li>
+           <p>
+           <strong>{{.c.ChannelTitle}}</strong>
+           published
+  <a href="https://www.youtube.com/watch?v={{.c.ExampleVideoId}}">{{ .c.ExampleVideoTitle}}</a>  
+           </p>
+        </li>
+        <li>
+           <p>
+  {{ deltaAgo .c.ExampleVideoPublishedAt}} ago
+
+           </p>
+        </li>
+        <li>
+                <p> {{.c.SubscriberCount}} subscriber(s).  </p>
+                <p> {{.c.ViewCount}} total channel view(s).  </p>
+                <p> {{.c.VideoCount}} total channel video(s).  </p>
+        </li>
+        </ul>
+</div>
+
+{{template "_footer" .}}

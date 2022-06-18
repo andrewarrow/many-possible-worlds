@@ -20,24 +20,30 @@ type Latest struct {
 	VideoCount              int64
 }
 
+func LoadLatest(id string) *Latest {
+	l := Latest{}
+	l.ChannelId = id
+	m := QueryAttributes(l.ChannelId)
+	l.ImageUrl = m["img"]
+	l.ChannelTitle = m["title"]
+	l.ExampleVideoId = m["vid"]
+	l.ExampleVideoPublishedAt, _ = strconv.ParseInt(m["vat"], 10, 64)
+	l.ExampleVideoTitle = m["vt"]
+	l.SubscriberCount, _ = strconv.ParseInt(m["subs"], 10, 64)
+	l.ViewCount, _ = strconv.ParseInt(m["vc"], 10, 64)
+	l.VideoCount, _ = strconv.ParseInt(m["vidc"], 10, 64)
+	return &l
+}
+
 func QueryLatest(zset string, amount int) []*Latest {
 	list := []*Latest{}
 
 	vals, _ := nc().ZRevRangeWithScores(ctx, zset, int64(0), int64(amount-1)).Result()
 	for _, item := range vals {
-		l := Latest{}
-		l.ChannelId = item.Member.(string)
-		m := QueryAttributes(l.ChannelId)
-		l.ImageUrl = m["img"]
-		l.ChannelTitle = m["title"]
-		l.ExampleVideoId = m["vid"]
-		l.ExampleVideoPublishedAt, _ = strconv.ParseInt(m["vat"], 10, 64)
-		l.ExampleVideoTitle = m["vt"]
-		l.SubscriberCount, _ = strconv.ParseInt(m["subs"], 10, 64)
-		l.ViewCount, _ = strconv.ParseInt(m["vc"], 10, 64)
-		l.VideoCount, _ = strconv.ParseInt(m["vidc"], 10, 64)
+		id := item.Member.(string)
+		l := LoadLatest(id)
 		//w.Score = int64(item.Score)
-		list = append(list, &l)
+		list = append(list, l)
 	}
 
 	return list
