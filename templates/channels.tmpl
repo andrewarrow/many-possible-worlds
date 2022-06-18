@@ -1,6 +1,12 @@
 {{template "_header" .}}
 <h1 class="entry-title">Channels</h1>
 
+        <ul class="cols">
+                <li><a href="/channels">Latest</a></li>
+                <li>|</li>
+                <li><a href="/channels?sort=vc">View Count</a></li>
+        </ul>
+
 <div class="featured">
     {{ range $l := .latest }}
         <ul class="cols">
