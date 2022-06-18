@@ -43,10 +43,17 @@ func handleItems(filename string) {
 			if !unicode.IsLetter(rune(txt[0])) {
 				break
 			}
-			fmt.Println(txt)
-			if txt == "" {
-				continue
+			txt = strings.Replace(txt, "\n", " ", -1)
+			tokens := strings.Split(txt, " ")
+			words := []string{}
+			for _, token := range tokens {
+				word := strings.TrimSpace(token)
+				if word == "" {
+					continue
+				}
+				words = append(words, word)
 			}
+			fmt.Println(strings.Join(words, " "))
 
 		}
 
