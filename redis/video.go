@@ -46,6 +46,11 @@ func FindPrevAndNextVideos(vid, cid string) (*Video, *Video) {
 		v.PublishedAt = int64(item.Score)
 		list = append(list, &v)
 	}
+	max := len(list)
+	if max < 2 {
+		return nil, nil
+	}
+
 	index := 0
 	for i, v := range list {
 		if v.Id == vid {
@@ -57,8 +62,8 @@ func FindPrevAndNextVideos(vid, cid string) (*Video, *Video) {
 	if index == 0 {
 		return LoadVideo(list[1].Id), nil
 	}
-	if index == 9 {
-		return nil, LoadVideo(list[8].Id)
+	if index == max-1 {
+		return nil, LoadVideo(list[max-2].Id)
 	}
 
 	return LoadVideo(list[index+1].Id), LoadVideo(list[index-1].Id)
