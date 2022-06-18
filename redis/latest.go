@@ -55,6 +55,12 @@ func UpdateLatestVc(l *Latest) {
 	nc().ZAdd(ctx, zset, &rz).Err()
 }
 
+func UpdateLatest(id string) {
+	zset := "latest"
+	rz := redis.Z{Score: float64(time.Now().Unix()), Member: id}
+	nc().ZAdd(ctx, zset, &rz).Err()
+}
+
 func InsertLatest(l *Latest) {
 
 	zset := "latest"

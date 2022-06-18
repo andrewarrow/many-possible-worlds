@@ -54,4 +54,6 @@ func ImportChannel(id string) {
 
 	redis.InsertLatest(&l)
 
+	//TODO insert video image url too!
+
 }
