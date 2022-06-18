@@ -11,6 +11,7 @@ func VideosShow(c *gin.Context) {
 
 	id := c.Param("id")
 	video := redis.LoadVideo(id)
+	older := redis.FindOlderVideo(video.ChannelId, video.PublishedAt)
 	channel := redis.LoadLatest(video.ChannelId)
 	redis.UpdateLatest(video.ChannelId, channel.ViewCount)
 
@@ -18,6 +19,7 @@ func VideosShow(c *gin.Context) {
 		"flash": "",
 		"email": "",
 		"v":     video,
+		"older": older,
 		"c":     channel,
 	})
 }

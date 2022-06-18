@@ -32,3 +32,17 @@ func AddToVideoSet(cid, vid string, pub int64) {
 	rz := redis.Z{Score: float64(pub), Member: vid}
 	nc().ZAdd(ctx, vidzset, &rz).Err()
 }
+
+func FindOlderVideo(cid string, pub int64) *Video {
+	vidzset := fmt.Sprintf("%s-v", cid)
+	zrb := redis.ZRangeBy{
+		Max:   fmt.Sprintf("%d", pub),
+		Min:   "-inf",
+		Count: 1,
+	}
+	vals, _ := nc().ZRangeByScore(ctx, vidzset, &zrb).Result()
+	if len(vals) == 0 {
+		return nil
+	}
+	return LoadVideo(vals[0])
+}

@@ -22,6 +22,12 @@
         </ul>
 </div>
 
+{{ if .older }}
+<h1 class="entry-title">Next</h1>
+{{ .older.Title }}
+{{ end }}
+
+
 <h1 class="entry-title">Channel</h1>
 
 <div class="featured">
