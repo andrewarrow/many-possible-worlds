@@ -19,7 +19,7 @@ func main() {
 
 	if command == "v" {
 		id := os.Args[2]
-		ImportVideo(id)
+		ImportChannelViaVideoId(id)
 	} else if command == "vs" {
 		id := os.Args[2]
 		ImportSingleVideo(id)

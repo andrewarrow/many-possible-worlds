@@ -7,7 +7,7 @@ import (
 	"many-pw/redis"
 )
 
-func ImportVideo(id string) {
+func ImportChannelViaVideoId(id string) {
 	json := network.FetchVideo(id)
 	if json == "" {
 		return

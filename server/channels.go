@@ -27,7 +27,7 @@ func ChannelsShow(c *gin.Context) {
 
 	id := c.Param("id")
 	single := redis.LoadLatest(id)
-	redis.UpdateLatest(id)
+	redis.UpdateLatest(id, single.ViewCount)
 	c.HTML(http.StatusOK, "channels_show.tmpl", gin.H{
 		"flash": "",
 		"email": "",

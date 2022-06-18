@@ -23,9 +23,6 @@ func ImportChannel(id string) {
 	}
 
 	first := result.Items[0]
-	/*
-		ImageUrl                string
-	*/
 
 	l := redis.Latest{}
 	l.ChannelId = first.Snippet.ChannelId
@@ -54,6 +51,6 @@ func ImportChannel(id string) {
 
 	redis.InsertLatest(&l)
 
-	//TODO insert video image url too!
+	ImportSingleVideo(l.ExampleVideoId)
 
 }

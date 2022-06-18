@@ -55,7 +55,13 @@ func UpdateLatestVc(l *Latest) {
 	nc().ZAdd(ctx, zset, &rz).Err()
 }
 
-func UpdateLatest(id string) {
+func UpdateLatest(id string, viewCount int64) {
+	if id == "" {
+		return
+	}
+	if viewCount > 99999 {
+		return
+	}
 	zset := "latest"
 	rz := redis.Z{Score: float64(time.Now().Unix()), Member: id}
 	nc().ZAdd(ctx, zset, &rz).Err()
