@@ -7,7 +7,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func VideoShow(c *gin.Context) {
+func VideoSlugShow(c *gin.Context) {
 
 	id := c.Param("id")
 	slug := c.Param("slug")

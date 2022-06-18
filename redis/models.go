@@ -8,6 +8,7 @@ type Video struct {
 	ChannelId    string
 	ViewCount    string
 	Subs         string
+	ImageUrl     string
 }
 
 type Channel struct {
