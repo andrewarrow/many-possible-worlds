@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"html"
 	"many-pw/network"
 	"many-pw/parse"
 	"many-pw/redis"
@@ -28,10 +29,10 @@ func ImportChannel(id string) {
 
 	l := redis.Latest{}
 	l.ChannelId = first.Snippet.ChannelId
-	l.ChannelTitle = first.Snippet.ChannelTitle
+	l.ChannelTitle = html.UnescapeString(first.Snippet.ChannelTitle)
 	l.ExampleVideoId = first.Id.VideoId
 	l.ExampleVideoPublishedAt = first.Snippet.PublishedAt.Unix()
-	l.ExampleVideoTitle = first.Snippet.Title
+	l.ExampleVideoTitle = html.UnescapeString(first.Snippet.Title)
 
 	json = network.GetChannel(id)
 	if json == "" {
