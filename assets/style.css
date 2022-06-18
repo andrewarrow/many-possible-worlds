@@ -704,10 +704,6 @@ footer .weather_text {
     html[lang="pl"] #menu-s:hover {
       cursor: pointer;
       color: #adadad; }
-  html[lang="pl"] #menu-list {
-    height: 0;
-    overflow: hidden;
-    transition: height 300ms ease-in-out; }
   html[lang="pl"] #menu-list.show {
     height: 100%; }
   html[lang="pl"] #menu ul {
@@ -735,10 +731,6 @@ footer .weather_text {
     html[lang="es"] #menu-s:hover, html[lang="fr"] #menu-s:hover {
       cursor: pointer;
       color: #adadad; }
-  html[lang="es"] #menu-list, html[lang="fr"] #menu-list {
-    height: 0;
-    overflow: hidden;
-    transition: height 300ms ease-in-out; }
   html[lang="es"] #menu-list.show, html[lang="fr"] #menu-list.show {
     height: 100%; }
   html[lang="es"] #menu ul, html[lang="fr"] #menu ul {
@@ -783,10 +775,6 @@ footer .weather_text {
     #menu-s:hover {
       cursor: pointer;
       color: #adadad; }
-  #menu-list {
-    height: 0;
-    overflow: hidden;
-    transition: height 300ms ease-in-out; }
   #menu-list.show {
     height: 100%; }
   #menu ul {
