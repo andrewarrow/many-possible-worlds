@@ -20,10 +20,9 @@ type Latest struct {
 	VideoCount              int64
 }
 
-func QueryLatest(amount int) []Latest {
-	list := []Latest{}
+func QueryLatest(zset string, amount int) []*Latest {
+	list := []*Latest{}
 
-	zset := "latest"
 	vals, _ := nc().ZRevRangeWithScores(ctx, zset, int64(0), int64(amount-1)).Result()
 	for _, item := range vals {
 		l := Latest{}
@@ -38,17 +37,26 @@ func QueryLatest(amount int) []Latest {
 		l.ViewCount, _ = strconv.ParseInt(m["vc"], 10, 64)
 		l.VideoCount, _ = strconv.ParseInt(m["vidc"], 10, 64)
 		//w.Score = int64(item.Score)
-		list = append(list, l)
+		list = append(list, &l)
 	}
 
 	return list
+}
+
+func UpdateLatestVc(l *Latest) {
+	zset := "latest-vc"
+	rz := redis.Z{Score: float64(l.ViewCount), Member: l.ChannelId}
+	nc().ZAdd(ctx, zset, &rz).Err()
 }
 
 func InsertLatest(l *Latest) {
 
 	zset := "latest"
 	rz := redis.Z{Score: float64(time.Now().Unix()), Member: l.ChannelId}
+	nc().ZAdd(ctx, zset, &rz).Err()
 
+	zset = "latest-vc"
+	rz = redis.Z{Score: float64(l.ViewCount), Member: l.ChannelId}
 	nc().ZAdd(ctx, zset, &rz).Err()
 
 	nc().HSet(ctx, l.ChannelId, "title", l.ChannelTitle).Err()

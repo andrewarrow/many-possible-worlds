@@ -9,7 +9,7 @@ import (
 
 func ChannelsIndex(c *gin.Context) {
 
-	latest := redis.QueryLatest(50)
+	latest := redis.QueryLatest("latest", 50)
 
 	c.HTML(http.StatusOK, "channels.tmpl", gin.H{
 		"flash":  "",
