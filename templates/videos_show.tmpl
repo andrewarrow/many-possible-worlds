@@ -22,9 +22,18 @@
         </ul>
 </div>
 
-{{ if .older }}
+{{ if .prev }}
+<div class="featured">
+<h1 class="entry-title">Previous</h1>
+    <a href="/video/{{.prev.Id}}">{{.prev.Title}}</a>
+</div>
+{{ end }}
+
+{{ if .next }}
+<div class="featured">
 <h1 class="entry-title">Next</h1>
-{{ .older.Title }}
+    <a href="/video/{{.next.Id}}">{{.next.Title}}</a>
+</div>
 {{ end }}
 
 

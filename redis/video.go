@@ -36,17 +36,30 @@ func AddToVideoSet(cid, vid string, pub int64) {
 	nc().ZAdd(ctx, vidzset, &rz).Err()
 }
 
-func FindOlderVideo(cid string, pub int64) *Video {
+func FindPrevAndNextVideos(vid, cid string) (*Video, *Video) {
 	vidzset := fmt.Sprintf("%s-v", cid)
-	zrb := redis.ZRangeBy{
-		Max:    fmt.Sprintf("%d", pub),
-		Min:    "-inf",
-		Count:  1,
-		Offset: 0,
+	list := []*Video{}
+	vals, _ := nc().ZRevRangeWithScores(ctx, vidzset, int64(0), int64(10)).Result()
+	for _, item := range vals {
+		v := Video{}
+		v.Id = item.Member.(string)
+		v.PublishedAt = int64(item.Score)
+		list = append(list, &v)
 	}
-	vals, _ := nc().ZRangeByScore(ctx, vidzset, &zrb).Result()
-	if len(vals) == 0 {
-		return nil
+	index := 0
+	for i, v := range list {
+		if v.Id == vid {
+			index = i
+			break
+		}
 	}
-	return LoadVideo(vals[0])
+
+	if index == 0 {
+		return LoadVideo(list[1].Id), nil
+	}
+	if index == 9 {
+		return nil, LoadVideo(list[8].Id)
+	}
+
+	return LoadVideo(list[index+1].Id), LoadVideo(list[index-1].Id)
 }
