@@ -7,6 +7,7 @@ func LoadVideo(id string) *Video {
 	m := QueryAttributes(id)
 	v.ImageUrl = m["img"]
 	v.Title = m["title"]
+	v.ChannelId = m["cid"]
 	v.Id = id
 	return &v
 }
