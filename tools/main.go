@@ -19,6 +19,8 @@ func main() {
 	if command == "v" {
 		id := os.Args[2]
 		ImportVideo(id)
-	} else if command == "ls" {
+	} else if command == "c" {
+		id := os.Args[2]
+		ImportCaptions(id)
 	}
 }
