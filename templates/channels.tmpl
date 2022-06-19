@@ -13,11 +13,11 @@
     {{ range $l := .latest }}
         <ul class="cols">
         <li>
-        <p><a href="/channel/{{$l.ChannelId}}"><img border="1" width="176" height="176" src="{{$l.ImageUrl}}"/></a></p>
+        <p><a href="/channel/{{$l.Id}}"><img border="1" width="176" height="176" src="{{$l.ImageUrl}}"/></a></p>
         </li>
         <li>
            <p>
-           <strong>{{$l.ChannelTitle}}</strong>
+           <strong>{{$l.Title}}</strong>
            published
   <a href="/video/{{$l.ExampleVideoId}}">{{ $l.ExampleVideoTitle}}</a>  
            </p>
