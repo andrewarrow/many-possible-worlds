@@ -1,0 +1,25 @@
+{{template "_header" .}}
+<h1 class="entry-title">Videos</h1>
+
+<div class="featured">
+    {{ range $l := .latest }}
+        <ul class="cols">
+        <li>
+        <a href="/video/{{$l.Id}}"><img border="1" width="320" height="180" src="{{$l.ImageUrl}}"/></a>
+        </li>
+        <li>
+           <p>
+           <a href="/video/{{$l.Id}}">{{$l.Title}}</a>
+           </p>
+        </li>
+        <li>
+           <p>
+           </p>
+        </li>
+        <li>
+        </li>
+        </ul>
+    {{ end }}
+</div>
+
+{{template "_footer" .}}

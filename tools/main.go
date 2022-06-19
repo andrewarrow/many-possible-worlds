@@ -1,6 +1,7 @@
 package main
 
 import (
+	"many-pw/api"
 	"many-pw/redis"
 	"math/rand"
 	"os"
@@ -19,14 +20,14 @@ func main() {
 
 	if command == "v" {
 		id := os.Args[2]
-		ImportVideo(id)
+		api.ImportVideo(id)
 	} else if command == "transcript" {
 		id := os.Args[2]
 		ParseTranscript(id)
 	} else if command == "loop" {
 		latest := redis.QueryLatest("latest", 50)
 		for _, l := range latest {
-			ImportVideo(l.ExampleVideoId)
+			api.ImportVideo(l.ExampleVideoId)
 		}
 	}
 }

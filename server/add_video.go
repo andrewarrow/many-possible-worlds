@@ -1,7 +1,7 @@
 package server
 
 import (
-	"many-pw/redis"
+	"many-pw/api"
 	"net/http"
 	"os"
 	"strings"
@@ -9,30 +9,28 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func AddWorld(c *gin.Context) {
+func AddVideo(c *gin.Context) {
 	flash, _ := c.Cookie("flash")
 	c.SetCookie("flash", "", 3600, "/", "", false, true)
 
-	c.HTML(http.StatusOK, "add_world.tmpl", gin.H{
+	c.HTML(http.StatusOK, "add_video.tmpl", gin.H{
 		"flash": flash,
 		"email": "",
 	})
 }
-func AddWorldSubmit(c *gin.Context) {
+func AddVideoSubmit(c *gin.Context) {
 	email, _ := c.Cookie("email")
 	if email != os.Getenv("MANY_PW_ADMIN_EMAIL") {
 		c.SetCookie("flash", "not valid", 3600, "/", "", false, true)
-		c.Redirect(http.StatusFound, "/add-world")
+		c.Redirect(http.StatusFound, "/add-video")
 		c.Abort()
 		return
 	}
 
-	q := strings.TrimSpace(c.PostForm("q"))
-	lower := strings.ToLower(q)
-	slug := strings.ReplaceAll(lower, " ", "-")
-	redis.InsertWorld(q, slug)
+	id := strings.TrimSpace(c.PostForm("id"))
+	api.ImportVideo(id)
 
-	c.Redirect(http.StatusFound, "/")
+	c.Redirect(http.StatusFound, "/videos")
 	c.Abort()
 
 }
