@@ -103,12 +103,4 @@
     {{ end }}
 </div>
 
-<h1 class="entry-title">Explore Worlds</h1>
-{{ range $w := .worlds }}
-<div class="entry-content">
-    <p>
-      <a href="/w/{{$w.Slug}}">{{$w.Title}}</a>
-    </p>
-</div>
-{{end}}
 {{template "_footer" .}}
