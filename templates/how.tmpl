@@ -3,32 +3,28 @@
 <div class="entry-content">
 
     <p>
-    There are many possible worlds out there and many.pw tries to surface them.
+    Non-Duality is not an easy thing to explain how it works.
+    You are not the separate individual self you experience yourself to be 
+    AND the sense of separation that you feel is artificial.
+    </p>
+    <p>
+    This definition comes from <a href="https://many.pw/channel/UCLOhIv9ro2hyePb4Fvh96JQ">Kenneth Madden</a>
+    one of the many channels on this site. Another favorite channel of mine is
+    <a href="https://many.pw/channel/UCuCvRv7jZAy1AdPa21_kOFw">Matias De Stefano</a> and there are many
+    <a href="https://many.pw/channels">others</a>.
+    </p>
+    <p>
+    Each channel has a collection of videos. On the video page there is sometimes highlighted text.
+    For example <a href="https://many.pw/video/_E8jQStwfDY">this one from #elevate</a> has the text:
+    </p>
+    <p class="highlight">
+    7:24 All you have to worry about is getting up every day and assessing your heart. Declaring your heart is open; open to experience, open to blessing, open to growth.
+    </p>
+    <p>
+    The seven colon twenty-four isn't a bible chapter and verse it's a timecode for where in the video this text is spoken.
+    As I'm watching these videos usually one particular line will stop me in my tracks and make me want to write it down.
     </p>
 
-              <p>We are a youtube (for now, other sites in the future) content finder.
-              Mods create various search phrases, sometimes just one word but can be multiple words, and we call <a href="https://developers.google.com/youtube/v3/docs/search/list">Google's API for search</a> with that query once an hour.
-              We also call the <a href="https://developers.google.com/youtube/v3/docs/channels/list">channels</a> 
-              API to get the SubscriberCount for each channel that came back in the search results. 
-              We need this number to sort the list by number of subscribers. 
-              </p>
-
-              <p>Each channel is added to <a href="https://redis.io/">redis</a> in a <a href="https://redis.io/commands/zadd/">sorted set</a> with that SubscriberCount as the score to sort by.
-              If you puruse a list of sorted channels for <a href="/w/meditation">a particular search phrase</a> you'll be looking at very fresh uploads.
-              That's the meditation world but there are many other worlds
-              (we call each one a "world") like <a href="/w/law-of-attraction">Law of Attraction</a> 
-              or <a href="/w/non-duality">Non-Duality</a>.
-              </p>
-              <p>
-              The fresh list is a rolling 24-hours of the channels with recent uploads and 
-              less than 2001 subscribers.
-              All the available worlds are listed on the <a href="/">homepage</a>.
-              If you get to know your world and <strong>come back to it throughout the day</strong>, you'll notice new channel names.
-              </p>
-        <p>
-          You can either just click around the fresh list as a normal user or be a mod.
-          A mod can promote favorites to the pinned list.
-        </p>
 </div>
 <h1 class="entry-title">Technology</h1>
 <div class="entry-content">
@@ -36,31 +32,13 @@
         <p>
         We use <a href="https://go.dev/">golang</a> and <a href="https://github.com/gin-gonic/gin">gin</a> with 
         <a href="https://pkg.go.dev/html/template">golang html templates</a> and <a href="https://github.com/go-redis/redis/">go-redis</a> to insert and query redis.
-        The 24-hour rolling list is done with another redis sorted set using the PublishedAt timestamp
-        as the score.
-
-        <pre>
-          ts := time.Now().Unix() - 86400
-          zrb := redis.ZRangeBy{ Min: "0", Max: fmt.Sprintf("%d", ts) }
-          vals, _ := nc().ZRangeByScore(ctx, pubzset, &zrb).Result()
-
-          for _, member := range vals {
-            nc().ZRem(ctx, subzset, member).Err()
-            nc().ZRem(ctx, pubzset, member).Err()
-          }
-        </pre>
-        </p>
-        <p>
-        So everytime you insert, you check the list for ones older than 24-hours and delete them.
-        Now - 86400 == yesterday.
         </p>
 </div>
 <h1 class="entry-title">Why Build This?</h1>
 <div class="entry-content">
         <p>
-        I really like finding new Channels in my worlds. I like fresh recently created content.
-        Youtube is like one big party and you get to walk over and talk with anyone you want.
-        But finding those interesting conversations to jump into can be challenging.
+        I'm constantly watching Non-Duality videos for my own education and wanted to keep notes in an
+        organized way other's could use.
         </p>
         <p>
         You can follow 
