@@ -17,7 +17,7 @@ func VideosShow(c *gin.Context) {
 		return
 	}
 	prev, next := redis.FindPrevAndNextVideos(id, video.ChannelId)
-	channel := redis.LoadLatest(video.ChannelId)
+	channel := redis.LoadChannel(video.ChannelId)
 	redis.UpdateLatest(video.ChannelId, channel.ViewCount)
 
 	c.HTML(http.StatusOK, "videos_show.tmpl", gin.H{

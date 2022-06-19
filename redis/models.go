@@ -12,13 +12,16 @@ type Video struct {
 }
 
 type Channel struct {
-	ViewCount       string
-	VideoCount      string
-	SubscriberCount string
-	Title           string
-	Id              string
-	PublishedAt     int64
-	ImageUrl        string
+	ViewCount               int64
+	VideoCount              int64
+	SubscriberCount         int64
+	Title                   string
+	Id                      string
+	PublishedAt             int64
+	ImageUrl                string
+	ExampleVideoId          string
+	ExampleVideoPublishedAt int64
+	ExampleVideoTitle       string
 }
 
 type World struct {

@@ -2,6 +2,7 @@ package redis
 
 import (
 	"fmt"
+	"strconv"
 	"time"
 )
 
@@ -23,7 +24,7 @@ func QueryPinned(slug string) []Channel {
 		m := QueryAttributes(c.Id)
 		c.Title = m["title"]
 		c.ImageUrl = m["img"]
-		c.SubscriberCount = m["subs"]
+		c.SubscriberCount, _ = strconv.ParseInt(m["subs"], 10, 64)
 		list = append(list, c)
 	}
 
@@ -40,7 +41,7 @@ func QueryChannelsInSlug(slug string, offset int) []Channel {
 		c.Id = item.Member.(string)
 		m := QueryAttributes(c.Id)
 		c.Title = m["title"]
-		c.SubscriberCount = m["subs"]
+		c.SubscriberCount, _ = strconv.ParseInt(m["subs"], 10, 64)
 		c.ImageUrl = m["img"]
 		c.PublishedAt = int64(item.Score)
 		list = append(list, c)

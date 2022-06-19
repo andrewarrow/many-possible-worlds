@@ -27,16 +27,16 @@ func ChannelsIndex(c *gin.Context) {
 func ChannelsShow(c *gin.Context) {
 
 	id := c.Param("id")
-	single := redis.LoadLatest(id)
-	if single.ChannelTitle == "" {
+	channel := redis.LoadChannel(id)
+	if channel.Title == "" {
 		Channel404(c)
 		return
 	}
-	redis.UpdateLatest(id, single.ViewCount)
+	redis.UpdateLatest(id, channel.ViewCount)
 	c.HTML(http.StatusOK, "channels_show.tmpl", gin.H{
 		"flash": "",
 		"email": "",
-		"c":     single,
+		"c":     channel,
 	})
 }
 
