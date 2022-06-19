@@ -1,6 +1,7 @@
 package server
 
 import (
+	"html/template"
 	"many-pw/redis"
 	"net/http"
 
@@ -27,10 +28,24 @@ func ChannelsShow(c *gin.Context) {
 
 	id := c.Param("id")
 	single := redis.LoadLatest(id)
+	if single.ChannelTitle == "" {
+		Channel404(c)
+		return
+	}
 	redis.UpdateLatest(id, single.ViewCount)
 	c.HTML(http.StatusOK, "channels_show.tmpl", gin.H{
 		"flash": "",
 		"email": "",
 		"c":     single,
 	})
+}
+
+func Channel404(c *gin.Context) {
+	body := template.HTML("This channel not found, but contact us to add it!")
+
+	c.HTML(http.StatusNotFound, "general.tmpl", gin.H{
+		"flash": "",
+		"body":  body,
+	})
+
 }
