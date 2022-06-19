@@ -13,8 +13,11 @@
            </p>
         </li>
         <li>
-           <p>
-           </p>
+        {{ if $l.Highlight }}
+        <p class="highlight">
+          {{$l.Highlight}}
+        </p>
+        {{ end }}
         </li>
         <li>
         </li>
