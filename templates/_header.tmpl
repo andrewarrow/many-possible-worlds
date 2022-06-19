@@ -5,10 +5,29 @@
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
 <meta name="description" content="many possible worlds">
-<link href="/assets/favicon.png" rel="icon" type="image/png"/>
+<link href="/assets/favicon.png?ran=1" rel="icon" type="image/png"/>
+
+{{ if .og }}
+<title>{{.og.Title}} | many.pw</title>
+<meta content="{{.og.Title}} | many.pw" property="og:title">
+<meta content="https://many.pw/{{.og.Url}}" property="og:url"/>
+<meta content="{{.og.Description}}" property="og:description"/>
+<meta content="{{.og.Image}}" property="og:image">
+<meta content="{{.og.Image}}" property="og:image:secure_url">
+<meta content="Many Possible Worlds" property="og:site_name"/>
+<meta content="{{.og.Author}}" property="og:article:author"/>
+<meta content="2022-05-24T00:00:00+02:00" property="og:article:published_time"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="{{.og.Title}}" name="twitter:title"/>
+<meta content="{{.og.Description}}" name="twitter:description"/>
+<meta content="{{.og.Image}}" name="twitter:image"/>
+{{ else }}
 <title>Many Possible Worlds! | many.pw</title>
+{{end}}
+
 <link href="/assets/style.css?ran=5" rel="stylesheet"/>
     <style>
+      p.highlight {padding: 10px; background-color: yellow}
       ul.menu {list-style-type: none; margin: 0; padding: 0;}
       ul.menu li {display: inline;}
       div.good-links a {text-decoration: none; color: #110011;}

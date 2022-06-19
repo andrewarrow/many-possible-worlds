@@ -15,6 +15,10 @@ func LoadVideo(id string) *Video {
 	v.Title = m["title"]
 	v.ChannelId = m["cid"]
 	v.PublishedAt, _ = strconv.ParseInt(m["pub"], 10, 64)
+	highlight := m["h"]
+	if highlight != "" {
+		v.Highlight = &highlight
+	}
 	v.Id = id
 	return &v
 }

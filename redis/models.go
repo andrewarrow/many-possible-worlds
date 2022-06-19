@@ -9,6 +9,7 @@ type Video struct {
 	ViewCount    string
 	Subs         string
 	ImageUrl     string
+	Highlight    *string
 }
 
 type Channel struct {

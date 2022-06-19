@@ -1,5 +1,5 @@
 {{template "_header" .}}
-<h1 class="entry-title">Video</h1>
+<h1 class="entry-title"><a href="https://www.youtube.com/watch?v={{.v.Id}}">{{.v.Title}}</a></h1>
 
 <div class="featured">
         <ul class="cols">
@@ -9,9 +9,11 @@
         </p>
         </li>
         <li>
-           <p>
-           <a href="https://www.youtube.com/watch?v={{.v.Id}}">{{.v.Title}}</a>
-           </p>
+        {{ if .v.Highlight }}
+        <p class="highlight">
+          {{.v.Highlight}}
+        </p>
+        {{ end }}
         </li>
         <li>
            <p>
@@ -37,7 +39,7 @@
 {{ end }}
 
 
-<h1 class="entry-title">Channel</h1>
+<h1 class="entry-title"><a href="/channel/{{.c.Id}}">{{.c.Title}}</a></h1>
 
 <div class="featured">
         <ul class="cols">
