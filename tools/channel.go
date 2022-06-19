@@ -9,29 +9,16 @@ import (
 	"strconv"
 )
 
-func ImportChannel(id string) {
-	json := network.VideosInChannel(id)
-	if json == "" {
-		return
-	}
-	//ioutil.WriteFile("fname.txt", []byte(json), 0644)
-	result := parse.ParseJson(json)
+func ImportChannel(v *redis.Video) {
 
-	if len(result.Items) < 1 {
-		fmt.Println("< 1")
-		return
-	}
+	c := redis.Channel{}
+	c.Id = v.ChannelId
+	c.Title = html.UnescapeString(v.ChannelTitle)
+	c.ExampleVideoId = v.Id
+	c.ExampleVideoPublishedAt = v.PublishedAt
+	c.ExampleVideoTitle = html.UnescapeString(v.Title)
 
-	first := result.Items[0]
-
-	l := redis.Latest{}
-	l.ChannelId = first.Snippet.ChannelId
-	l.ChannelTitle = html.UnescapeString(first.Snippet.ChannelTitle)
-	l.ExampleVideoId = first.Id.VideoId
-	l.ExampleVideoPublishedAt = first.Snippet.PublishedAt.Unix()
-	l.ExampleVideoTitle = html.UnescapeString(first.Snippet.Title)
-
-	json = network.GetChannel(id)
+	json := network.GetChannel(c.Id)
 	if json == "" {
 		return
 	}
@@ -42,15 +29,12 @@ func ImportChannel(id string) {
 		return
 	}
 
-	c := channels.Items[0]
+	cjson := channels.Items[0]
 
-	l.ViewCount, _ = strconv.ParseInt(c.Statistics.ViewCount, 10, 64)
-	l.VideoCount, _ = strconv.ParseInt(c.Statistics.VideoCount, 10, 64)
-	l.SubscriberCount, _ = strconv.ParseInt(c.Statistics.SubscriberCount, 10, 64)
-	l.ImageUrl = c.Snippet.Thumbnails.Medium.Url
+	c.ViewCount, _ = strconv.ParseInt(cjson.Statistics.ViewCount, 10, 64)
+	c.VideoCount, _ = strconv.ParseInt(cjson.Statistics.VideoCount, 10, 64)
+	c.SubscriberCount, _ = strconv.ParseInt(cjson.Statistics.SubscriberCount, 10, 64)
+	c.ImageUrl = cjson.Snippet.Thumbnails.Medium.Url
 
-	redis.InsertLatest(&l)
-
-	ImportSingleVideo(l.ExampleVideoId)
-
+	redis.InsertLatest(&c)
 }

@@ -19,20 +19,14 @@ func main() {
 
 	if command == "v" {
 		id := os.Args[2]
-		ImportChannelViaVideoId(id)
-	} else if command == "vs" {
-		id := os.Args[2]
-		ImportSingleVideo(id)
-	} else if command == "c" {
-		id := os.Args[2]
-		ImportChannel(id)
+		ImportVideo(id)
 	} else if command == "transcript" {
 		id := os.Args[2]
 		ParseTranscript(id)
 	} else if command == "loop" {
 		latest := redis.QueryLatest("latest", 50)
 		for _, l := range latest {
-			ImportSingleVideo(l.ExampleVideoId)
+			ImportVideo(l.ExampleVideoId)
 		}
 	}
 }
