@@ -1,0 +1,18 @@
+{{template "_header" .}}
+<h1 class="entry-title">Edit</h1>
+
+<div class="entry-content">
+
+    <p>
+    <form method="POST" action="/video/{{.v.Id}}/edit">
+              <p>
+              <textarea name="h" rows="10" cols="40">{{.v.Highlight}}</textarea>
+              </p>
+              <p>
+        <input type="submit" value="Save"/>
+              </p>
+      </form>
+    </p>
+</div>
+
+{{template "_footer" .}}

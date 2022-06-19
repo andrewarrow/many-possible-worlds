@@ -23,6 +23,10 @@ func LoadVideo(id string) *Video {
 	return &v
 }
 
+func UpdateVideoHighlight(id, highlight string) {
+	nc().HSet(ctx, id, "h", highlight).Err()
+}
+
 func StoreSingleVideo(v *Video) {
 	nc().HSet(ctx, v.Id, "title", v.Title).Err()
 	nc().HSet(ctx, v.Id, "cid", v.ChannelId).Err()

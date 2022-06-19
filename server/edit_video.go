@@ -1,7 +1,7 @@
 package server
 
 import (
-	"many-pw/api"
+	"many-pw/redis"
 	"net/http"
 	"os"
 	"strings"
@@ -9,17 +9,18 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func AddVideo(c *gin.Context) {
-	flash, _ := c.Cookie("flash")
-	c.SetCookie("flash", "", 3600, "/", "", false, true)
+func VideoEdit(c *gin.Context) {
 
-	c.HTML(http.StatusOK, "add_video.tmpl", gin.H{
-		"flash": flash,
+	id := c.Param("id")
+	video := redis.LoadVideo(id)
+	c.HTML(http.StatusOK, "edit_video.tmpl", gin.H{
+		"flash": "",
+		"v":     video,
 		"email": "",
 	})
 }
 
-func AddVideoSubmit(c *gin.Context) {
+func VideoEditSubmit(c *gin.Context) {
 	email, _ := c.Cookie("email")
 	if email != os.Getenv("MANY_PW_ADMIN_EMAIL") {
 		c.SetCookie("flash", "not valid", 3600, "/", "", false, true)
@@ -28,10 +29,10 @@ func AddVideoSubmit(c *gin.Context) {
 		return
 	}
 
-	id := strings.TrimSpace(c.PostForm("id"))
-	api.ImportVideo(id)
+	id := c.Param("id")
+	highlight := strings.TrimSpace(c.PostForm("h"))
+	redis.UpdateVideoHighlight(id, highlight)
 
 	c.Redirect(http.StatusFound, "/videos")
 	c.Abort()
-
 }

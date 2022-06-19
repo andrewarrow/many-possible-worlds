@@ -20,6 +20,7 @@ func Serve(port string) {
 	router.GET("/channel/:id", ChannelsShow)
 	router.GET("/videos", VideosIndex)
 	router.GET("/video/:id", VideosShow)
+	router.GET("/video/:id/edit", VideoEdit)
 	router.GET("/how-it-works", HowIndex)
 	router.GET("/welcome-new-user", NewUserIndex)
 	router.GET("/add-video", AddVideo)
@@ -38,6 +39,7 @@ func Serve(port string) {
 	router.POST("/register", RegisterSubmit)
 	router.POST("/add-world", AddWorldSubmit)
 	router.POST("/add-video", AddVideoSubmit)
+	router.POST("/video/:id/edit", VideoEditSubmit)
 	// TODO add way to submit specific videos like
 	// https://www.youtube.com/watch?v=kFBFFOGwJ5w
 	// The Key to Graduating 3rd Density (Law of One) ft. Kyle Cease
