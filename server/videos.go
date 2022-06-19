@@ -8,6 +8,18 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+func VideosIndex(c *gin.Context) {
+
+	key := "latest-vid"
+	latest := redis.QueryLatestVideos(key, 50)
+
+	c.HTML(http.StatusOK, "videos.tmpl", gin.H{
+		"flash":  "",
+		"email":  "",
+		"latest": latest,
+	})
+}
+
 func VideosShow(c *gin.Context) {
 
 	id := c.Param("id")

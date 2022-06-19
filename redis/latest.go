@@ -7,6 +7,20 @@ import (
 	"github.com/go-redis/redis/v8"
 )
 
+func QueryLatestVideos(zset string, amount int) []*Video {
+	list := []*Video{}
+
+	vals, _ := nc().ZRevRangeWithScores(ctx, zset, int64(0), int64(amount-1)).Result()
+	for _, item := range vals {
+		id := item.Member.(string)
+		v := LoadVideo(id)
+		//w.Score = int64(item.Score)
+		list = append(list, v)
+	}
+
+	return list
+}
+
 func QueryLatest(zset string, amount int) []*Channel {
 	list := []*Channel{}
 
