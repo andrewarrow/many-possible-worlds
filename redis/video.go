@@ -27,12 +27,13 @@ func StoreSingleVideo(v *Video) {
 	expireTime := time.Now().Add(time.Hour * 24 * 30 * 12 * 2)
 	nc().ExpireAt(ctx, v.Id, expireTime)
 
-	AddToVideoSet(v.Id, v.PublishedAt)
+	AddToVideoSet(v.Id, time.Now().Unix())
 	AddToChannelVideoSet(v.ChannelId, v.Id, v.PublishedAt)
 }
-func AddToVideoSet(vid string, pub int64) {
+
+func AddToVideoSet(vid string, ts int64) {
 	vidzset := "latest-vid"
-	rz := redis.Z{Score: float64(pub), Member: vid}
+	rz := redis.Z{Score: float64(ts), Member: vid}
 	nc().ZAdd(ctx, vidzset, &rz).Err()
 }
 
