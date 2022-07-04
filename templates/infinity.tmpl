@@ -1,0 +1,99 @@
+{{template "_header" .}}
+<h2 class="entry-title">Infinity</h2>
+<div class="entry-content">
+
+<div class="featured">
+        <table border="1">
+           <tr>
+            <td valign="top">
+              <span id="others">
+                <!-- 1 * 2 = 2, 2 * 2 = 4, 8, 16, 32, 64 -->
+              </span>
+        </td>
+        <td valign="top">
+          <span id = "three-six">
+                <!-- 3 * 2 = 6 * 2 = 12, 12 * 2 = 24, 48 -->
+          </span>
+        </td>
+        <td valign="top">
+          <span id = "nine">
+                <!-- 9 * 2 = 18, 18 * 2 = 36, 36 * 2 = 72 -->
+          </span>
+        </td>
+        </tr>
+        </table>
+</div>
+
+</div>
+
+<script>
+
+function makeAsciiDigits(lines, num) {
+  var items = [];
+  var asString = num.toString();
+  var buff = "";
+  for (var i=0; i<asString.length; i++) {
+    items.push(parseInt(asString[i], 10));
+    buff = buff + asString[i];
+    if (i < asString.length-1) {
+       buff = buff + "+";
+    }
+  }
+  var sum = 0;
+  for (var i=0; i<items.length; i++) {
+    sum = sum + items[i];
+  }
+  lines.push(buff + "=" + sum.toString());
+  if (sum.toString().length > 1) {
+    return makeAsciiDigits(lines, sum)
+  }
+  lines.push(sum.toString())
+  return lines;
+}
+
+function everySecond() {
+  var otherLines = [];
+  var otherResults = makeAsciiDigits(otherLines, window.globalOthers);
+  var threeSixLines = [];
+  var threeSixResults = makeAsciiDigits(threeSixLines, window.globalThreeSix);
+  var nineLines = [];
+  var nineResults = makeAsciiDigits(nineLines, window.globalNine);
+
+  var buff = "";
+  for (var i=0; i<otherResults.length; i++ ) {
+     buff = buff + "<br/>&nbsp;&nbsp;"+otherResults[i]; 
+  }
+
+  document.getElementById("others").innerHTML = window.globalOthers + buff + "<br/>" + document.getElementById("others").innerHTML;
+
+  buff = "";
+  for (var i=0; i<threeSixResults.length; i++ ) {
+     buff = buff + "<br/>&nbsp;&nbsp;"+threeSixResults[i]; 
+  }
+
+  document.getElementById("three-six").innerHTML = window.globalThreeSix + buff + "<br/>" + document.getElementById("three-six").innerHTML; 
+  buff = "";
+  for (var i=0; i<nineResults.length; i++ ) {
+     buff = buff + "<br/>&nbsp;&nbsp;"+nineResults[i]; 
+  }
+
+  document.getElementById("nine").innerHTML = window.globalNine + buff + "<br/>" + document.getElementById("nine").innerHTML;
+
+  window.globalOthers = window.globalOthers * 2;
+  window.globalThreeSix = window.globalThreeSix * 2;
+  window.globalNine = window.globalNine * 2;
+
+  if (window.globalNine < 20266198323167230) {
+    setTimeout(everySecond, 1000);
+  }
+}
+
+document.addEventListener("DOMContentLoaded", function(event) {
+  window.globalOthers = 1;
+  window.globalThreeSix = 3;
+  window.globalNine = 9;
+  setTimeout(everySecond, 1000);
+});
+</script>
+    
+{{template "_footer" .}}

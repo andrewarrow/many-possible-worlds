@@ -14,6 +14,7 @@ func Serve(port string) {
 
 	router.Static("/assets", "assets")
 	router.GET("/", WelcomeIndex)
+	router.GET("/infinity", InfinityIndex)
 	router.GET("/login", LoginIndex)
 	router.GET("/survey", SurveyIndex)
 	router.GET("/channels", ChannelsIndex)
